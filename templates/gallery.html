@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+
+      {% block title %}SAIC Gallery {% endblock %}
+        
+    {% block body %} 
+    
+
+         <div class="row">
+            <div class="col-xs-12 col-sm-2" style="margin-top:6%">
+                <ul class="nav nav-pills nav-stacked" style="border:1px dotted rgba(0,0,0,.2)">
+                {% for folder,files in all_files.items %}
+                {% with "#"|add:folder as folder_path %}
+                {% if forloop.counter == 1 %}
+                    <li class="active border-radius:0px"><a data-toggle="tab" href={{folder_path}}>{{folder}} <span class="glyphicon glyphicon-chevron-right pull-right"></span></a></li>
+                {% else %}
+                    <li class="border-radius:0px"><a data-toggle="tab" href={{folder_path}}>{{folder}} <span class="glyphicon glyphicon-chevron-right pull-right"></span></a></li>
+                {% endif %}
+                {% endwith %}
+                {% endfor %}
+                </ul>
+             </div>
+            
+            
+
+      <div class="col-xs-12 col-sm-10">      
+    <div class="tab-content">
+{% for folder,files in all_files.items %}
+{% with folder as folder_path %}
+{% if forloop.counter == 1 %}
+<div id="{{folder_path}}" class="tab-pane fade in active">            
+     <div class="row" style="margin-top:6%">
+     {% for file in files %}                    
+                    <div class="col-sm-6 col-xs-6 col-lg-2 col-md-3 img-border1">
+                    {% with base_path|add:folder|add:"/"|add:file as file_path %}
+                        <a href="{{file_path}}" data-title="caption" data-lightbox="Technex">
+                            <img src="{{file_path}}" class="img-round img-responsive " width="150px"  style="height:150px;">
+                        </a>
+                    {% endwith %}
+                    </div>
+    {% endfor %}
+    </div>             
+                     <hr style="padding:5px;margin:5px">
+</div>      
+        {% else %}
+    <div id="{{folder_path}}" class="tab-pane fade">
+    <div class="row" style="margin-top:6%"> 
+    {% for file in files %} 
+                    <div class="col-sm-6 col-xs-6 col-lg-2 col-md-3 img-border1" style="padding:15px;">
+                    {% with base_path|add:folder|add:"/"|add:file as file_path %}
+                        <a href="{{file_path}}" data-title="caption" data-lightbox="Technex">
+                            <img src="{{file_path}}" class="img-round img-responsive" width="150px" style="height:150px;">
+                        </a>
+                    {% endwith %}
+                    </div>
+                {% endfor %}  
+                </div>                
+                     <hr style="padding:5px;margin:5px">
+        </div>
+        {% endif %}
+        {% endwith %}
+{% endfor %}
+    </div>
+    </div>
+        
+</div>
+<script>
+var loader = jQuery('<div class="dizzy-gillespie"></div>');
+
+jQuery(document).ready(function(){
+    loader.prependTo('img');
+});
+
+jQuery(window).load(function(){
+    loader.remove();
+});
+
+</script>
+
+{% endblock %}

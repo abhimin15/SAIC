@@ -1,0 +1,168 @@
+{% extends "base2.html" %}
+
+ 
+          {% block title %} IIT BHU Alumni Portal {% endblock %}
+         
+
+     {% block body %} 
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+<!------------------------------------------------------------Navigation Bar Ends--------------------------------------------------------------->
+<!----------------------------------------------Profile Page Starts------------------------------------------------------------------------>
+<div class="container" style="padding-top: 60px;">
+  <div class="row">
+    <!-- left column -->
+   
+    <!---Right Column-->
+      <div class="col-md-8 col-sm-6 col-xs-12 col-md-offset-2 col-sm-offset-3 shadow-done roundcorner">
+              <h3 style="text-align:center">Guest House Booking</h3>
+              <p><!--Welcome, User. You can easily book IIT (BHU) guest house rooms by filling a short form given below. Once you submit the form all further communications will be done via email on your registered email-id. We hope for your wonderful stay in the campus-->We are currently unavailable to recieve responses.
+              </p>
+              <br>
+              <!--
+              <h4 style="text-align:center">Booking Form</h4>
+                <form action="/portal/guestHouse/" method="POST">
+                   {% csrf_token %} 
+                   <div style="color:red">
+                          {{errors}}
+                         {{date}}
+                   </div>
+                   <div class="row">
+                           <div class="col-md-6 col-lg-6 col-xs-6 col-sm-6">
+                                <label>{{form.no_of_attendees.label}}</label>
+                                <br>{{form.no_of_attendees}}
+                          </div> 
+                          <div class="col-md-6 col-lg-6 col-xs-6 col-sm-6">
+                            <label>{{form.no_of_rooms.label}}</label>
+                              <br>{{form.no_of_rooms}}
+                          </div> 
+
+                  </div>
+                  <div class="row">
+                          <div class="col-md-6 col-lg-6 col-xs-6 col-sm-6">
+                              <label>{{form.date_start.label}}</label>
+                              <br>{{form.date_start}}
+
+                          </div> 
+                          <div class="col-md-6 col-lg-6 col-xs-6 col-">
+                            <label>{{form.date_end.label}}</label>
+                            <br>{{form.date_end}}
+
+                          </div> 
+                  </div>
+                  <div class="row">
+                          <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                              <label>{{form.comments.label}}</label>
+                              <br>{{form.comments}}
+
+
+                          </div> 
+                          
+                  </div>
+                  <div class="row">
+                          <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                              <label>{{form.mobile.label}}</label>
+                              <br>{{form.mobile}}
+
+
+                          </div> 
+                          
+                  </div>
+
+
+                 <br>
+
+                  <div class="form-group">
+                      <div class="col-sm-offset-3 col-sm-6 " >
+                             <div id="captcha">
+                                        <script src="https://www.google.com/recaptcha/api/challenge?k=6Ldofx8TAAAAAPkvqRCHxwsTKmAT8lHccOTbk9Gu">
+                                        </script> 
+                                    <noscript>
+                                  <iframe src="https://www.google.com/recaptcha/api/noscript?k=6Ldofx8TAAAAAPkvqRCHxwsTKmAT8lHccOTbk9Gu" width="300" frameborder="0" height="300"></iframe><br>
+                                  <textarea name="recaptcha_challenge_field" id="recaptcha_challenge_field" rows="3" cols="40">
+                                   </textarea>
+                                  <input name="recaptcha_response_field" id="recaptcha_response_field" value="manual_challenge" type="hidden">
+                                  </noscript> 
+            </div>
+                      </div>
+                  </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-6 " >
+                           <input type="submit" name="submit" value="Submit" signclass="btn btn-primary" class="btn btn-primary roundcorner" />
+                    </div>
+                </div>
+                
+                </form>
+                -->
+ </div>
+          </div>
+              
+      </div><!--Right COlumn ends-->
+  
+<!----------------------------------------------Profile Page Ends------------------------------------------------------------------------>
+    </div>
+   
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+   
+   <div class="modal fade" style="display:none;top:15%" id="successBook" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"  aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 style="color:green" class="modal-title" id="myModalLabel">Almost There!!</h4>
+      </div>
+  
+       
+  <div class="modal-body" >
+       
+  <p>We are processing your booking. You will hear from us soon.</p>
+    
+      </div>
+      <div class="modal-footer">
+        
+      </div>
+
+    </div>
+  </div>
+</div>
+    <!-- Custom js-->
+<script>
+function bookingPopUp(){
+var value="{{successBooking}}";
+if (value.match("1")){
+  $("#successBook").modal("show");
+
+}
+console.log("{{successBooking}}");
+
+}
+
+ window.onload = bookingPopUp;
+
+
+</script>
+
+<script>
+    $(function() {
+    $( "#datepicker_start" ).datepicker({ changeYear: true ,yearRange: "-0:+1",dateFormat: "yy-mm-dd"});
+  });
+
+     $(function() {
+    $( "#datepicker_end").datepicker({ changeYear: true ,yearRange: "-0:+1",dateFormat: "yy-mm-dd"});
+  });
+
+    </script>
+   <script src="https://www.google.com/recaptcha/api.js"></script>
+   <script>
+        $(document).ready(function(){
+                $("#forumnav").removeClass('active');
+                $("#settingnav").removeClass('active');
+                $("#searchnav").removeClass('active');
+                $("#forumnav").removeClass('active');
+                $("#guesthousenav").addClass('active');
+                $("#notificationnav").removeClass('active');
+
+        });
+</script>
+    {% endblock %} 

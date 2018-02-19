@@ -1,0 +1,65 @@
+{% extends "base1.html" %}
+{% comment %}
+  This is the main template for all portal pages.
+{% endcomment %}
+
+{% block head %}
+  <title> {% block title %}{% endblock %}</title>
+{% block style %}
+<style>
+#success{
+margin-top:15%;
+margin-right:30%;
+margin-left:35%;
+border:1px solid;
+border-radius:6px;
+padding:3%;
+}
+#navbar
+{
+background: rgb(239,239,239); /* Old browsers */
+background: -moz-linear-gradient(top,  rgba(239,239,239,1) 1%, rgba(252,252,252,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(1%,rgba(239,239,239,1)), color-stop(100%,rgba(252,252,252,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  rgba(239,239,239,1) 1%,rgba(252,252,252,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  rgba(239,239,239,1) 1%,rgba(252,252,252,1) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  rgba(239,239,239,1) 1%,rgba(252,252,252,1) 100%); /* IE10+ */
+background: linear-gradient(to bottom,  rgba(239,239,239,1) 1%,rgba(252,252,252,1) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#efefef', endColorstr='#fcfcfc',GradientType=0 ); /* IE6-9 */
+
+}
+</style>
+{% endblock %}
+{% endblock %}
+{% block body %}
+
+
+{% block content %}
+<nav class="navbar navbar-fixed-top"  id="navbar" role="navigation" style="background-color:#FFF;border-bottom:2px solid #1975D1
+">
+			  <div class="navbar-header">
+     				<a id="staff" href="/portal/staff/" class="navbar-brand">Staff</a>   				
+					<span class="navbar-text">|</span>	
+				<a id="complaint" href="/portal/complaint/" class="navbar-brand">Complaint</a><span class="navbar-text">|</span>   <a id="complaint" href="/portal/suggestion/" class="navbar-brand">Suggestion</a>
+	
+     
+  </div>
+				
+				<div class="pull-right"><a id="logout" href="/logout/" class="navbar-brand">Logout</a>
+				
+				</div>
+				
+	
+			{% block nav %}{% endblock %}			
+				</nav>  	
+
+<div id="success">
+	
+	<button type="button" class="btn btn-primary">Book Room</button><span style="margin-left:150px">	
+	<button type="button" class="btn btn-primary">Check Status</button></span>	
+
+
+</div>
+
+
+{% endblock %}
+{% endblock %}

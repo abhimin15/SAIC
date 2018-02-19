@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+  <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width,initial-scale=1">
+          <!--Cache optimisation for f02ter loads-->
+          <meta name="author" content="Shivam Kumar Banka">
+          <meta http-equiv="cache-control" content="Public">
+          <meta http-equiv="content-language" content="en-US">
+          <meta http-equiv="Content-type" content="text/html,charset=UTF-8">
+          <meta name="description" content="Student Alumni Interaction Cell">
+          <meta http-equiv="expires" content="86400">
+          <meta name="keywords" content="SAIC,Student,Alumni,Interaction,iitbhu,cell">
+          <meta http-equiv="refresh" content="https://www.itbhualumni.net">
+          <meta name="robots" content="all">
+          <meta property="og:title" content="Student Alumni Interaction Cell(SAIC) IIT BHU" />
+          <meta property="og:type" content="website" /> 
+          <meta property="og:description" content=" SAIC is an attempt and a platform to muster all the scattered pearls that were once stringed together in the necklace of this institute, and let them contribute to the enhancement of the college and its students." />
+          <meta property="og:image" content="https://www.yourdomain.com/image-name.jpg" /> 
+          <title>{% block title %} {% endblock %}</title>
+          <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+          <link href="/static/css/bootstrap-theme.min.css" rel="stylesheet">
+          <link href="/static/css/font-awesome.min.css" rel="stylesheet">
+          <link href="/static/css/bootstrap-social.min.css" rel="stylesheet"> 
+          <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+          <link rel="apple-touch-icon" sizes="57x57" href="/static/favicon/apple-icon-57x57.png">
+          <link rel="apple-touch-icon" sizes="60x60" href="/static/favicon/apple-icon-60x60.png">
+          <link rel="apple-touch-icon" sizes="72x72" href="/static/favicon/apple-icon-72x72.png">
+          <link rel="apple-touch-icon" sizes="76x76" href="/static/favicon/apple-icon-76x76.png">
+          <link rel="apple-touch-icon" sizes="114x114" href="/static/favicon/apple-icon-114x114.png">
+          <link rel="apple-touch-icon" sizes="120x120" href="/static/favicon/apple-icon-120x120.png">
+          <link rel="apple-touch-icon" sizes="144x144" href="/static/favicon/apple-icon-144x144.png">
+          <link rel="apple-touch-icon" sizes="152x152" href="/static/favicon/apple-icon-152x152.png">
+          <link rel="apple-touch-icon" sizes="180x180" href="/static/favicon/apple-icon-180x180.png">
+          <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+          <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon/favicon-32x32.png">
+          <link rel="icon" type="image/png" sizes="96x96" href="/static/favicon/favicon-96x96.png">
+          <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon/favicon-16x16.png">
+          <link rel="manifest" href="/static/favicon/manifest.json">
+          <meta name="msapplication-TileColor" content="#ffffff">
+          <meta name="msapplication-TileImage" content="/static/favicon/ms-icon-144x144.png">
+          <meta name="theme-color" content="#ffffff">
+          <link href="/static/css/main.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/static/css/style.min.css" />
+        <link rel="stylesheet" type="text/css" href="/static/css/custom.min.css" />
+<!--         <link rel="stylesheet" href="/static/css/superslides.min.css">
+ -->        <link rel="stylesheet" href="/static/css/animate.min.css">  
+        <link rel="stylesheet" href="/static/css/elastic_grid.min.css"> 
+        <link rel="stylesheet" type="text/css" media="all"
+      href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/smoothness/jquery-ui.css"/>
+        <link rel='stylesheet prefetch' href='https://cdn.rawgit.com/pguso/jquery-plugin-circliful/master/css/jquery.circliful.css'>    
+        <link id="orginal" href="/static/css/default-theme.min.css" rel="stylesheet">
+        <noscript>
+              <link rel="stylesheet" type="text/css" href="/static/css/styleNoJS.css" />
+        </noscript>
+        <!-- Google fonts -->
+        <link href='//fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+        <link href='//fonts.googleapis.com/css?family=Varela' rel='stylesheet' type='text/css'>
+        <link href='//fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+        <link href="/static/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        <script src="/static/js/bootstrap.min.js"></script>
+</head>
+    <div class="container">
+    <div class="row">
+<!------------------------------------------------------------Navigation Bar Starts------------------------------------------------------------>
+    <nav id="mynavbar" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="row">
+            <div class="col-sm-12"> 
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle Navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>       
+                </button>
+                    <a href="https://itbhualumni.net">
+<img class="img img-responsive" style="padding: 2px" src="/static/img/logo3.png">                      </a>
+            </div>
+               
+            <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+             <li id="searchnav"><a href="/portal/search/" style="color:white;text-align:center" ><span class="glyphicon glyphicon-search"
+                         aria-hidden="true"></span > Search</a> </li>
+              {% if category_to_check_mentorship == 'alumni' %}
+              <!--<li id="guesthousenav"><a href="/portal/guestHouse/" style="color:white;text-align:center" ></i></span ><span class="glyphicon glyphicon-bed"
+                         aria-hidden="true"> GuestHouseBooking</a> </li> -->{% endif %}
+                   {% if category_to_check_mentorship == 'alumni' or category_to_check_mentorship == 'student' %}     
+                <li class="dropdown" id="initiativenav">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="color:white;"><i class="fa fa-angellist"></i> Contribute<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+               
+                   <li><a href="/portal/mentor_response/"><span class="glyphicon glyphicon-education"
+                         aria-hidden="true"></span> Mentorship</a></li> 
+               {% if category_to_check_mentorship == 'alumni' %} 
+                    {% endif %}     
+                   <li role="seperator" class="divider" style="margin:0px 0px;"></li>
+                  
+                 
+                </ul>
+                {% endif %}
+                </li>
+                {% csrf_token %}
+                <li id="notificationnav">
+                  <a href="/portal/notification_read/" style="color:white;">Notifications{% if count_gen_request or count_broadcast or count_request %}<span class="badge" id="count" style="background:red;">{{total_count_notification}}</span>{% endif %}</a>              
+                </li>
+                <li class="active" id="forumnav"><a href="/portal/forum/" style="color:white;"><i class="fa fa-users"></i> Feeds</a></li>
+                  <li id="contactusnav"><a href="/portal/contactus/" style="color:white;"><span class="glyphicon glyphicon-earphone"
+                         aria-hidden="true"></span> Contact Us</a></li>
+                <li class="dropdown" id="dropdownnav">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="color:white;"><span class="glyphicon glyphicon-user"
+                         aria-hidden="true"></span> Hello,{{profile_data.firstName}}<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                   <li id="profilenav"><a href="/portal/profile/"><span class="glyphicon glyphicon-user"
+                         aria-hidden="true"></span> Profile</a></li> 
+                   <li role="seperator" class="divider" style="margin:0px 0px;"></li>
+                   <li id="settingnav"><a href="/portal/setting/"><span class="glyphicon glyphicon-cog"
+                         aria-hidden="true"></span> Settings</a></li>
+                    <li role="seperator" class="divider" style="margin:0px 0px;"></li>
+                   <li><a href="/logout/"><span class="glyphicon glyphicon-log-out"
+                         aria-hidden="true"></span> Signout</a></li>
+                </ul>
+                </li>
+            </ul>  
+            </div>
+            </div>
+                
+            </div>
+    </div>
+</nav>
+  <br>
+
+  {% if profile_data.register == 0 and category_to_check_mentorship == 'alumni' %}
+  <div class="container">
+  <div class="row" style="margin-top:-30px">
+    
+        <div class="col-md-12 col-lg-12 col-sm-12 ">
+          <a href="/portal/alumniMeet2017" target="__blank"><button class="btn btn-primary">Register for Alumni Meet 2017</button></a>
+        </div>
+      
+  </div>
+  </div>
+{% elif category_to_check_mentorship == 'alumni' %}
+<div class="row" style="margin-top:-20px">
+      
+        <div style="color:green"class="col-md-12 col-lg-12 col-sm-12 col-sm-offset-1">
+       <a href="/portal/alumniMeet2017" target="__blank"><button class="btn btn-primary"><strong>You are registered for the Alumni Meet 2017</strong></button></a>
+        </div>
+      
+  </div>
+{% endif %}
+{% block body %}
+
+	{% endblock %}
+ <script src="/static/js/modernizr.custom.79639.js"></script>
+    <script src="/static/js/jquery.ba-cond.min.js"></script>
+    <script src="/static/js/jquery.slitslider.min.js"></script>
+    <script src="/static/js/custom.min.js"></script>
+     <script src="/static/js/validator.min.js"></script>
+    <script src="/static/js/wow.min.js"></script> 
+    
+<!--     <script src="/static/js/jquery.superslides.min.js" type="text/javascript"></script>
+<!--  -->    <!-- <script src="/static/js/slick.min.js"></script>  -->   
+ -->    <script src='https://cdn.rawgit.com/pguso/jquery-plugin-circliful/master/js/jquery.circliful.min.js'></script>
+    <script src="/static/js/modernizr.custom.js"></script>
+    <script src="/static/js/classie.min.js"></script>
+    <script src="/static/js/elastic_grid.min.js"></script>
+
+    {% block scripts %}
+
+    {% endblock %}
+</html>

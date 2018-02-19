@@ -1,0 +1,30 @@
+{% extends "base1.html" %}
+{% comment %}
+  This is the main template for all portal pages.
+{% endcomment %}
+
+{% block head %}
+  <title> {% block title %}{% endblock %}</title>
+{% block style %}
+<style>
+#success{
+margin-top:15%;
+margin-right:20%;
+margin-left:30%;
+
+
+}
+</style>
+{% endblock %}
+{% endblock %}
+{% block body %}
+
+
+{% block content %}
+<div id="success">
+	<h3>Success!An email has been sent to your id with a link.Please click on link and verify your account.</h3>	
+	
+</div>
+
+{% endblock %}
+{% endblock %}

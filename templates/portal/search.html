@@ -1,0 +1,245 @@
+{% extends "base2.html" %}
+
+ 
+          {% block title %} IIT BHU Alumni Portal {% endblock %}
+         
+
+     {% block body %}
+{% load timesince %}
+<!------------------------------------------------------------Navigation Bar Ends--------------------------------------------------------------->
+<!----------------------------------------------Profile Page Starts------------------------------------------------------------------------>
+<div >
+<div class="container" style="padding-top: 60px;">
+  <div class="row">
+    <!-- left column -->
+    <div class="col-sm-12 col-xs-12 col-md-3">
+      <div class="panel panel-success shadow-done roundcornerbig">
+        <div class="panel-heading">
+          <h3 class="panel-title text-center">Call us!</h3>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <h5 class="item-pad col-xs-12"><span class="glyphicon glyphicon-search"></span> Search by name:Provide the first name and hit submit</h5>
+            <h5 class="item-pad col-xs-12"><span class="glyphicon glyphicon-search"></span>Search by year:Enter the graduation year and hit enter</h5>
+            <h5 class="item-pad col-xs-12"><span class="glyphicon glyphicon-search"></span>Search by Branch:Select one of the branches and hit enter</h5>
+            <h5 class="item-pad col-xs-12"><span class="glyphicon glyphicon-search"></span>Alumni,Student and Faculty can been searched through.</h5>
+            <<h5 class="item-pad col-xs-12"><span class="glyphicon glyphicon-search"></span>Scroll Down to see the results and click on their names to view their profile.</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+   
+    <!---Right Column-->
+      <div class="col-md-8 col-sm-12 col-xs-12 box">
+        <div class="container">
+        <div id="searchFormDesign" class="row shadow-done roundcorner">
+          <div class="container">
+              <div ><h4 class="text-center">Search Form</h4></div>
+              
+              <h6>Note: You can search Alumni,Student or Faculty either by  their name ,year ,branch or the combination of them </h6>
+
+              <form class="form-horizontal" role="form" method="post" action="/portal/search/" id="SearchForm" data-toggle="validator">
+              <div id="error" style="color:red;text-align:center">
+                        {{error}} 
+              </div>
+
+              {% csrf_token %}
+                <div class="form-group">
+                      <label class="col-sm-3 control-label">{{search_form.search_byName.label}}</label>
+                    <div class="col-sm-8 col-sm-offset-1 input-group">
+                      <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                      {{search_form.search_byName}}
+                  </div>  
+
+                </div>
+
+                <div class="form-group">
+                      <label class="col-sm-3 control-label">{{search_form.search_byYear.label}}</label>
+                    <div class="col-sm-3 col-sm-offset-1 input-group">
+                      <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                      {{search_form.search_byYear}}
+                  </div> 
+                  </div>
+                <div class="form-group">                   
+                      <label class="col-sm-3 control-label">{{search_form.search_byDepartment.label}}</label>
+                  <div class="col-sm-7 col-sm-offset-1 input-group">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-paperclip"></span></span>
+                      {{search_form.search_byDepartment}}
+                  </div> 
+                </div> 
+
+
+                
+                <br>
+                <div class="form-group">
+                  <div class="col-sm-offset-4">
+                  <button class="btn btn-default roundcorner"><span class="glyphicon glyphicon-search roundcorner"></span>Search</button>
+                </div>
+              </div>
+              </form>
+            </div>
+            </div>
+            <br>
+            <br>
+            <br>
+            <div>
+            {% if count_alumni or count_student or count_faculty  %}
+            <div class="row"><h5 class="text-left">{{ count_total}} Record(s) Found</h5></div>
+            <br>
+                <div class="row"><h4 class="text-center">Search Results</h4></div>
+            <div class="row roundcorner shadow-done" id="resultDisplaysHere">
+              <ul class="nav nav-pills nav-justified">
+                <li id="AlumniResults"  class="active" ><a data-toggle="tab" href="#alumniresults">Alumni <span class="badge">{{count_alumni}}</span></a></li>
+                <li id="StudentResults"><a data-toggle="tab" href="#studentresults">Student <span class="badge">{{count_student}}</span></a></li>
+                <li id="FacultyResults"><a data-toggle="tab" href="#facultyresults">Faculty <span class="badge">{{count_faculty}}</span></a></li>
+              </ul>
+              <div class="resultresizer">
+              <div class="tab-content">
+                <div id="alumniresults" class="tab-pane fade in active">
+                    <div class="container">
+                       <ul>
+                          {% for alumni in search_results_alumni %}
+                          <li>
+                            
+                            <div class="row">
+                                 <div class="media">
+                                        <div class="media-left media-top testi_img forumimgs">
+                                            <a href={% url 'user_detail' alumni.id  'alumni' %}>
+                                            <img class="media-object img-thumbnail"
+                                             src="{{alumni.photo.url}}" alt="">
+                                            </a>
+                                        </div>
+                                        
+                                        <div class="media-body">
+                                          <a href={% url 'user_detail' alumni.id 'alumni'  %}>
+                                            <h3 class="media-heading">{{alumni.firstName}} &nbsp; {{alumni.lastName}}</h3></a>
+                                            <p>Batch of :{{alumni.year}} <span></span> <br>Department:&nbsp;{{alumni.branch}} <span></span></p>
+                                            {% if alumni.email == profile_data.email %}
+                                            <p><small class="text-right timesince">Online: Just Now</small></p>
+                                            {% else %}
+                                            <p><small class="text-right timesince">Online: {{alumni.last_activity | age}}</small></p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                            </div>
+                            <hr>
+
+                          </li>
+                      {% empty %}
+                          <li>Sorry, No results found</li>
+                      {% endfor %}
+                      </ul> 
+                    </div>                
+                </div>
+                <div id="studentresults" class="tab-pane fade">
+                    <div class="container">
+                       <ul>
+                            {% for student in search_results_student %}
+                            <li>
+                              
+                              <div class="row">
+                                   <div class="media">
+                                          <div class="media-left media-top testi_img forumimgs">
+                                              <a href={% url 'user_detail' student.id 'student'  %}>
+                                              <img class="media-object img-thumbnail"
+                                               src="{{student.photo.url}}" alt="">
+                                              </a>
+                                          </div>
+                                          <div class="media-body">
+                                            <a href={% url 'user_detail' student.id 'student'  %} >
+                                              <h3 class="media-heading">{{student.firstName}} &nbsp; {{student.lastName}}</h3></a>
+                                              <p>Batch of :{{student.year}} <span></span> <br>Department:&nbsp;{{student.branch}} <span></span></p>
+                                               {% if student.email == profile_data.email %}
+                                            <p><small class="text-right timesince">Online: Just now</small></p>
+                                            {% else %}
+                                            <p><small class="text-right timesince">Online: {{student.last_activity | age}}</small></p>
+                                            {% endif %}
+                                          </div>
+                                      </div>
+                              </div>
+                            
+                              <hr>
+
+                            </li>
+                        {% empty %}
+                            <li>Sorry, No results found</li>
+                        {% endfor %}
+                        </ul>
+                    </div>                
+                </div>
+                <div id="facultyresults" class="tab-pane fade">
+                    <div class="container">
+                        <ul>
+                            {% for faculty in search_results_faculty %}
+                            <li>
+                              
+                              <div class="row">
+                                   <div class="media">
+                                          <div class="media-left media-top testi_img forumimgs">
+                                              <a href={% url 'user_detail' faculty.id 'faculty'  %}>
+                                              <img class="media-object img-thumbnail"
+                                               src="{{faculty.photo.url}}" alt="">
+                                              </a>
+                                          </div>
+                                          <div class="media-body">
+                                            <a href={% url 'user_detail' faculty.id 'faculty' %} >
+                                              <h3 class="media-heading">{{faculty.firstName}} &nbsp; {{faculty.lastName}}</h3></a>
+                                              <p>Batch of :{{faculty.year}} <span></span> <br>Department:&nbsp;{{faculty.branch}} <span></span></p>
+                                               {% if faculty.email == profile_data.email %}
+                                            <p><small class="text-right timesince">Online: Just now</small></p>
+                                            {% else %}
+                                            <p><small class="text-right timesince">Online: {{faculty.last_activity | age}}</small></p>
+                                            {% endif %}
+                                          </div>
+                                      </div>
+                              </div>
+                            
+                              <hr>
+
+                            </li>
+                        {% empty %}
+                            <li>Sorry, No results found</li>
+                        {% endfor %}
+                        </ul>
+                    </div>                
+                </div>
+              </div>
+            </div>
+            </div>
+              {% else %}
+                <div class="row">
+                  None Found Yet
+                  </div>
+            {% endif %}
+          </div>
+          </div>
+              <br>
+          </div>
+        </div>
+       </div> 
+   </div>
+<!----------------------------------------------Profile Page Ends------------------------------------------------------------------------->
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+   
+    <!-- Custom js-->
+    <script>
+        $(document).ready(function(){
+                $("#forumnav").removeClass('active');
+                $("#dropdownnav").removeClass('active');
+                $("#profilenav").removeClass('active');
+                $("#settingnav").removeClass('active');
+                $("#searchnav").addClass('active');
+
+        });
+</script>
+    <script>
+      $(document).ready(function(){
+            $('#SearchForm').on('submit', function () {
+            // $("#resultDisplaysHere").css("display","block");
+});
+            });
+
+    </script>
+    {% endblock %} 

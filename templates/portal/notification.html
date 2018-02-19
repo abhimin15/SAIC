@@ -1,0 +1,172 @@
+{% extends "base2.html" %}
+
+ 
+          {% block title %} IIT BHU Alumni Portal {% endblock %}
+         
+
+     {% block body %}
+{% load temptag %}
+{% load temptag2 %}
+  {% load timesince %}
+<!------------------------------------------------------------Navigation Bar Ends-------------->
+  <div class="row" style="padding-top: 60px;min-height:600px">
+      <div class="col-md-8 col-sm-11 col-xs-12 col-sm-offset-1 col-md-offset-2 box shadow-done roundcorner">
+        <div id="searchFormDesign">
+          <div class="row ">
+              <div ><h4 class="text-center">Notifications</h4></div>
+              <h6 class="text-center">Note:Broadcast tab displays broadcast messages from IIT BHU, Requests display contact info requests </h6>
+              <ul class="nav nav-pills nav-justified">
+                <li ><a data-toggle="tab" href="#broadcaststab">Broadcasts{% if count_broadcast %}<span class="badge">{{ count_broadcast }}</span>{% endif %}</a></li>
+                <li class="active"><a data-toggle="tab" href="#requeststab">Requests{% if count_request %}<span class="badge">{{ count_request }}</span>{% endif %}</a></li>
+                <li ><a data-toggle="tab" href="#generalnotitab">General{% if count_gen_request %}<span class="badge">{{ count_gen_request }}</span>{% endif %}</a></li>
+              </ul>
+              <div class="tab-content notification-tab-content tab-scroll-bar">
+                <div id="broadcaststab" class="tab-pane fade">
+                        <div class="col-xs-12" style="padding-left:0px;">
+                                 {% for broadcast in broadcasts %}
+                                 <div class="notifications-wrapper">
+                                    <div class="content">
+                                     <div class="new-notifications">
+                                      <h4 class="item-title text-center" style="border-bottom:rgba(0,0,0,0.3) solid 0.3px;">{{broadcast.heading_broadcast | title}}</h4>
+                                      <p class="item-info">{{broadcast.content_broadcast}}</p>
+                                      <p class="item-info text-left"><small class="text-right timesince">{{broadcast.date_broadcast | age}}</small></p>
+                                    </div>   
+                                    </div>
+                                  </div>
+                                  {% endfor %}
+                        </div>
+                      <!--old Notifications-->
+                      <div class="col-xs-12" style="padding-left:0px;">
+                      {% for broadcast_old in broadcasts_old %}
+                                 <div class="notifications-wrapper">
+                                    <div class="content">
+                                     <div class="old-notifications">
+                                      <h4 class="item-title text-center" style="border-bottom:rgba(0,0,0,0.3) solid 0.3px;">{{broadcast_old.heading_broadcast | title}}</h4>
+                                      <p class="item-info text-left">{{broadcast_old.content_broadcast}}</p>
+                                      <p class="item-info text-left"><small class="text-right timesince">{{broadcast_old.date_broadcast | age}}</small></p>
+                                    </div>   
+                                    </div>
+                                  </div>
+                      {% endfor %}
+                    </div>
+                      {% if not broadcasts_old and not broadcasts  %}
+                          <div class="notifications-wrapper">
+                                  <a class="content" href="#">
+                                    <div class="notification-item">
+                                      <h4 class="item-title">No Notifications To display</h4>
+                                    </div>   
+                                  </a>
+                                  </div>
+                      {% endif %}
+                </div>
+                <div id="requeststab" class="tab-pane fade in active">
+                      {% if contact_requests %}
+                        <div class="col-xs-12" style="padding-left:0px;">
+                                 {% for contacts in contact_requests %}
+                                 {% do_foo contacts %}
+                                 {% if contacts.mobile_requested == 'requested' %}
+                                 <div class="notifications-wrapper">
+                                    <div class="content">
+                                      <div class="notification-item">
+                                      <h2 class="item-title text-center reseth2"><a href={% url 'user_detail' temp_user.id contacts.requestercategory %} target="_blank"> <img src="{{temp_user.photo.url}}" class="img-circle" alt="Cinque Terre" width="50" height="50"> {{ temp_user.firstName | title}} {{ temp_user.lastName}}</a> requested for your Mobile <div class="btn-group" role="group" aria-label="...">
+                                      <a href={% url 'request_update' '1' contacts.id 'accepted'  %}><button type="button" class="btn btn-success roundcorner">Accept</button></a>
+                                      <a href={% url 'request_update' '1' contacts.id 'declined'  %}><button type="button" class="btn btn-danger roundcorner">Decline</button></a>
+                                    </div><small class="text-right timesince">{{contacts.date_request | age}}</small></h2>
+                                      <p class="item-info"></p>
+                                    </div>   
+                                    </div>
+                                  </div>
+                                  {% endif %}
+                                  {% if contacts.email_requested == 'requested'  %}
+                                    <div class="notifications-wrapper">
+                                    <div class="content">
+                                     <div class="notification-item">
+                                      <h2 class="item-title text-center reseth2"><a href={% url 'user_detail' temp_user.id contacts.requestercategory %} target="_blank"> <img src="{{temp_user.photo.url}}" class="img-circle" alt="Cinque Terre" width="50" height="50"> {{ temp_user.firstName | title}} {{ temp_user.lastName}}</a> requested for your Email <div class="btn-group" role="group" aria-label="...">
+                                      <a href={% url 'request_update' '0' contacts.id 'accepted'  %}><button type="button" class="btn btn-success roundcorner">Accept</button></a>
+                                      <a href={% url 'request_update' '0' contacts.id 'declined'  %}><button type="button" class="btn btn-danger roundcorner">Decline</button></a>
+                                    </div><small class="text-right timesince">{{contacts.date_request | age}}</small></h2>
+                                      <p class="item-info"></p>
+                                    </div>   
+                                    </div>
+                                  </div>
+                                  {% endif %}
+                                 {% endfor %}
+                        </div>
+                      {% else %}
+                          <div class="notifications-wrapper">
+                                  <a class="content" href="#">
+                                    <div class="notification-item">
+                                      <h4 class="item-title">No requests To display</h4>
+                                    </div>   
+                                  </a>
+                                  </div>
+                      {% endif %}
+                </div>
+                <div id="generalnotitab" class="tab-pane fade">
+                  {% if contact_requests_response_new %}
+                        <div class="col-xs-12" style="padding-left:0px;">
+                          
+                                 {% for contactresponse in contact_requests_response_new %}
+                                 {% do_requests contactresponse %}
+                                 <div class="notifications-wrapper">
+                                    <div class="content">
+                                     <div class="new-notifications">
+                                      <h2 class="item-title text-center reseth2"><a href={% url 'user_detail' gen_user.id contactresponse.requestedcategory %} target="_blank"> <img src="{{gen_user.photo.url}}" class="img-circle" alt="Cinque Terre" width="50" height="50"> {{ gen_user.firstName | title}} {{ gen_user.lastName}}</a> {{contactresponse.notification_content}}<small class="text-right timesince">{{contactresponse.date_response | age}}</small></h2>
+                                    </div>   
+                                    </div>
+                                  </div>
+                                 {% endfor %}
+                        </div>
+                      {% elif not contact_requests_response_old %}
+                          <div class="notifications-wrapper">
+                                  <a class="content" href="#">
+                                    <div class="notification-item">
+                                      <h4 class="item-title">No Notifications To display</h4>
+                                    </div>   
+                                  </a>
+                                  </div>
+                      {% endif %}
+                      <!-----old Notifications------>
+                      {% for contactresponseold in contact_requests_response_old %}
+                        {% do_requests contactresponseold %}
+                                 <div class="notifications-wrapper">
+                                    <div class="content">
+                                     <div class="old-notifications">
+                                      <h2 class="item-title text-center reseth2"><a href={% url 'user_detail' gen_user.id contactresponseold.requestedcategory %} target="_blank"> <img src="{{gen_user.photo.url}}" class="img-circle" alt="Cinque Terre" width="50" height="50"> {{ gen_user.firstName | title}} {{ gen_user.lastName}}</a> {{contactresponseold.notification_content}}  <small class="text-right timesince">{{contactresponseold.date_response | age}}</small></h2>
+                                      
+                                       
+                                    </div>   
+                                    </div>
+                                  </div>
+                                 {% endfor %}
+                </div>
+              </div>
+
+          </div>
+        </div>                    
+      </div>
+  </div>    
+  <script>
+        $(document).ready(function(){
+                $("#forumnav").removeClass('active');
+                $("#settingnav").removeClass('active');
+                $("#searchnav").removeClass('active');
+                $("#forumnav").removeClass('active');
+                $("#notificationnav").addClass('active');
+                $("#guesthousenav").removeClass('active');
+
+        });
+</script>
+<script>
+        $(document).ready(function(){
+                $("#forumnav").removeClass('active');
+                $("#settingnav").removeClass('active');
+                $("#searchnav").removeClass('active');
+                $("#forumnav").removeClass('active');
+                $("#dropdownnav").removeClass('active');
+                $("#initiativenav").removeClass('active');
+                $("#guesthousenav").removeClass('active');
+                $("#notificationnav").addClass('active');
+        });
+</script>
+    {% endblock %} 

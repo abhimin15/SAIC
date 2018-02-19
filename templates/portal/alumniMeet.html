@@ -1,0 +1,820 @@
+{% extends "base2.html" %}
+
+ 
+          {% block title %} IIT BHU Alumni Portal {% endblock %}
+         
+
+     {% block body %} 
+     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+     <link rel="stylesheet" href="/static/css/alumniMeet.css">
+<!------------------------------------------------------------Navigation Bar Ends--------------------------------------------------------------->
+<!----------------------------------------------Profile Page Starts------------------------------------------------------------------------>
+
+<div class="container" style="padding-top: 20px;">
+
+  <div class="row  " style="min-height: 450px;">
+    <div class="alert alert-success" id="success-alert" style="display:none">
+    <button type="button" class="close" data-dismiss="alert">x</button>
+    <strong>Success! </strong>
+    Travel Details are succesfully updated!!
+</div>  		
+<h3 id="AlumniMeetText">Alumni Meet 2017</h3>
+
+
+<div id="AlumniMeet2017List" style="margin:1% overflow:hidden" >
+    <div class="row strip" style="margin:1%" >
+        <div class="col-md-3 col-lg-3 col-xs-3 bar hoverChange" id="information" onclick="paymentLinkModule(0)">
+            <h5><span>Step 1.</span> Information</h5>
+
+        </div>
+        <div class="col-md-3 col-lg-3 col-xs-3 hoverChange"  id="payment" onclick="paymentLinkModule(1)"><!--onclick="paymentLinkModule(1)"-->
+          <h5>Step 2. Payment</h5>            
+
+        </div>
+        <div class="col-md-3 col-lg-3 col-xs-3 hoverChange" id="reciept" onclick="paymentLinkModule(2)">
+            <h5>Step 3. Reciept</h5>
+
+        </div>
+        <div class="col-md-3 col-lg-3 col-xs-3 hoverChange" id="travel" onclick="paymentLinkModule(3)" >
+            <h5>Step 4. Travel</h5>
+
+        </div>
+    </div>
+     <div class="infoArea" style="margin:1%">
+    <div class="row" id="informationLink" style="margin:1%">
+          <div class="col-md-8 col-lg-8 col-xs-12 margin-right">
+          <!--<h4 style="text-align:center">Theme</h4>
+            <strong><h5 style="color:black;padding-bottom:0%;font-size:15px;text-align:center">Human Values in Engineering Education: Character Building for the Nation.</h5></strong> -->
+           <h4 style="color:white;text-align:center;color:#001A66">Instructions</h4><br>
+           <div style="margin:-3%;text-align:left;color:black">
+             <p><strong>1.</strong> Go to the <a onclick="paymentLinkModule(1)">Step 2</a></p>
+             <p><strong>2.</strong> Pay by any <strong>one</strong> method , either Online Payment or Offline Payment (through DD or Cheque). </p>
+             <p><strong>3.</strong> For offline payment , download the form for which the link is given in the resources section on this page and in the payment section on the next page.</p>
+           <p><strong>4.</strong> Instructions for the offline form are given in the form itself.</p>
+            <p><strong>5.</strong> For Online payment just proceed through the steps in the payment section. After successful payment , a receipt will be generated that confirms your registration.</p>
+             <p><strong>6.</strong> You can download the receipt from Receipt section after successful payment</p>
+            <p><strong>7.</strong> Fill the Travel Details in the travel section.</p>
+
+           </div>          
+          
+        </div>
+        <div class="col-md-4 col-lg-4 col-xs-12 height">
+        <h3 class="center" style="color:black">Resources</h3>
+        <ul style="color:black;">
+          <li>Brochure (<a class="pointer"  href="/static/alumniMeet/brochure.pdf" target="_blank">Download</a>)</li>
+          <!--<li><a href="/static/hotelDetails.pdf" target="_blank">Hotels</a></li>
+          <li><a style="cursor:pointer"
+                href="/static/ScheduleAlumniMeet.pdf" target="_blank">Program Schedule<sup
+                  style="color:blue">New</sup></a></li> -->
+                  <br>
+			<li><a href="/static/alumniMeet/schedule.jpg" target="__blank">Schedule</a></li>
+           <li><strong>Form link for Offline payment is given below: </strong></li>
+          <a href="/static/alumniMeet/offlineForm.pdf" target="__blank"><button class="btn btn-default boxButton" >Download Form</button></a>
+       
+        </ul>
+        </div>
+
+
+    </div>
+
+
+            <div id="paymentLink" style="display:none">
+
+           {% if alumniDetails.register == 0 %} 
+      <div id="page1" class="row">
+          <div class="col-md-6  col-sm-6 col-lg-6 ">
+             <h3 class="margin" style="color:black">Option 1</h3>          
+          <div class="optionBox">
+
+             <div class="optionBar">
+                <h4 class="headText">Online Payment</h4>
+             </div>
+             <div>
+             <p class="boxTextInside">You can pay via the payment gateway of HDFC into our account.<img style="margin-left:25%" class="img img-responsive" src="/static/images/banklogo.jpg" width="150px" heigth="20px"></p>
+             </div>
+
+                
+                    <button onclick="paymentPage(2)" class="btn btn-default boxButtonProceed">Proceed</button>
+                
+            </div>
+
+
+          </div>
+
+
+          <div class="col-md-6  col-sm-6 col-lg-6 ">
+          <h3 class="margin" style="color:black">Option 2</h3>
+         <div class="optionBox">
+
+             <div class="optionBar">
+                <h4 class="headText">Offline Form</h4>
+             </div>
+             <div>
+             <p class="boxTextInside">You can download the form and pay via DD or Cheque.</p>
+
+
+             </div>
+               <a href="/static/alumniMeet/offlineForm.pdf" target="__blank"><button class="btn btn-default boxButton">Download Form</button>
+                </a>
+             </div>
+          </div>
+		
+      </div>
+
+
+
+      
+      
+<form method="post" id="paymentForm" action="/portal/checkout/" >
+          {% csrf_token %}
+          <div id="page2" class="row" style="color:#FFFFFF;" style="display:none">
+            <!--  <div class="col-md-3 col-lg-3 col-md-offset-1 col-lg-offset-1" style="margin-top:15%">
+
+                <div class="row">
+                  <div class="col-md-4 col-lg-4">
+                      <label>Option</label>
+                  </div>
+                  <div class="col-md-8 col-lg-8">
+                      <select class="form-control">
+                        <option>Offline Form</option>
+                      </select>    
+                  </div>
+                
+                </div>
+              </div> -->
+              <div class="col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3 col-sm-8 col-sm-offset-2" style="margin-top:5.5%">  
+
+
+                <div class="box">
+                    <div id="errorPaymentForm2" style="color:#E2353E;text-align:center">
+                        Fields can not be left empty
+                    </div>
+                    <br>
+                    <div class="row">
+                          <div class="col-md-4 col-lg-4 col-sm-4">
+                          <label>Delegate</label>
+
+                          </div>
+                          <div class="col-md-8 col-lg-8 col-sm-8">
+                                {{payForm.delegate}}
+                          </div>
+                
+                    </div>
+                    <br>
+                     <div class="row">
+                          <div class="col-md-4 col-lg-4 col-sm-4">
+                          <label>No. of persons<br>(Including you)</label>
+
+                          </div>
+                          <div class="col-md-8 col-lg-8 col-sm-8">
+                                {{payForm.persons_count}}
+                          </div>
+                
+                    </div>
+                    <br>  
+                     
+<div style="font-style:italic;font-size:12px">For any queries, please contact support@itbhualumni.net</div>
+                
+                </div>
+                <button type="button" onclick="paymentPage(3)" class="btn btn-primary pull-right">Next</button>
+                <button type="button" onclick="paymentPage(1)" class="btn btn-default pull-left">Previous</button>
+
+
+         
+
+       </div>
+
+      </div>
+
+
+
+  <div id="page3" class="row" style="color:#FFFFFF;" style="display:none">
+            <!--  <div class="col-md-3 col-lg-3 col-md-offset-1 col-lg-offset-1" style="margin-top:15%">
+
+                <div class="row">
+                  <div class="col-md-4 col-lg-4">
+                      <label>Option</label>
+                  </div>
+                  <div class="col-md-8 col-lg-8">
+                      <select class="form-control">
+                        <option>Offline Form</option>
+                      </select>    
+                  </div>
+                
+                </div>
+              </div> -->
+              <div class="col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3 col-sm-8 col-sm-offset-2" style="margin-top:1.5%">  
+
+
+                <div class="box">
+                    <div id="errorPaymentForm3" style="color:#E2353E;text-align:center">
+                        
+                    </div>
+                    <br>
+                      
+                    <label>Please provide the names of attendies</label>
+                     <div class="row">
+                          <div class="col-md-6 col-lg-6 col-sm-6">
+                          {{payForm.person1}}
+                          </div>
+                          <div class="col-md-6 col-lg-6 col-sm-6">
+                                {{payForm.person2}}
+                          </div>
+                
+                    </div>  
+                     <br> 
+                       <div class="row">
+                          <div class="col-md-6 col-lg-6 col-sm-6">
+                          {{payForm.person3}}
+                          </div>
+                          <div class="col-md-6 col-lg-6 col-sm-6">
+                                {{payForm.person4}}
+                          </div>
+                
+                    </div>  
+                    <br>
+                       <div class="row">
+                          <div class="col-md-6 col-lg-6 col-sm-6">
+                          {{payForm.person5}}
+                          </div>
+                          <div class="col-md-6 col-lg-6 col-sm-6">
+                               {{payForm.person6}}
+                          </div>
+                
+                   
+                </div><br>
+                <div style="font-style:italic;font-size:12px">For any queries, please contact support@itbhualumni.net</div>
+            
+                </div>
+                     <button type="button" onclick="paymentPage(4)" class="btn btn-primary pull-right">Next</button>
+                <button type="button" onclick="paymentPage(2)" class="btn btn-default pull-left">Previous</button>
+
+
+         
+
+       
+
+      </div>
+      </div>
+
+
+
+  <div id="page4" class="row" style="color:#FFFFFF;" style="display:none">
+            <!--  <div class="col-md-3 col-lg-3 col-md-offset-1 col-lg-offset-1" style="margin-top:15%">
+
+                <div class="row">
+                  <div class="col-md-4 col-lg-4">
+                      <label>Option</label>
+                  </div>
+                  <div class="col-md-8 col-lg-8">
+                      <select class="form-control">
+                        <option>Offline Form</option>
+                      </select>    
+                  </div>
+                
+                </div>
+              </div> -->
+              <div class="col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3" style="margin-top:0.5%">
+
+
+                <div class="box" >
+                <div id="errorPaymentForm4" style="color:#E2353E;text-align:center">
+                        
+                    </div>
+                <table class="table table-striped" style="margin-bottom:0%;" >
+                <tbody>
+                    <tr  >
+                    <td>Registration Amount(per alumnus)</td>
+                    <td id="amount"></td>
+                    </tr>
+                     <tr >
+                    <td>Registration Amount(per accompanying person)</td>
+                    <td id="amount_accomp"></td>
+                    </tr>
+                     <tr >
+                    <td>No. of persons</td>
+                    <td  id="person"></td>
+                    </tr>
+                     <tr class="success" >
+                    <td >Total Amount</td>
+                    <td id="total_amount" style="font-weight:bold"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                
+                <input type="checkbox" value="1" id="checkboxTerms" style="display:show"><span style="font-size:12px"> I accept the <a class="pointer" id="termsConditions">terms and conditions</a></span>
+                
+                <p style="font-size:10px;"><span style="color:red;">Note:</span><span >In case, amount is debited from your account and reciept is not generated, please wait for 24 hours before trying again.</span><div style="font-style:italic;font-size:12px">For any queries, please contact support@itbhualumni.net</div>
+                </p>
+                
+                    </div>
+                    
+
+                     <button  type="submit" class="btn btn-primary pull-right">Pay</button>
+                <button type="button" onclick="paymentPage(3)" class="btn btn-default pull-left">Previous</button>
+
+                    </div>
+
+                      
+                    
+
+               
+
+         
+
+       </div>
+
+      
+{{orderForm.errors}}
+
+{{orderForm}}
+
+
+
+ </form>
+
+{% else %}
+<div style="margin:25%;margin-top:14%;text-align:center;color:#A347A3;">
+  <h3>You are already registered for the <br>Alumni Meet 2017</h3>
+ </div>
+ {% endif %} 
+
+    </div>
+
+
+
+
+
+
+<div id="recieptLink" style="display:none">
+ {% if alumniDetails.register %}
+    
+    <div style="margin:15%;margin-top:14%;text-align:center;color:#A347A3;">
+ 
+  <h3>Note: Delegates are required to submit a hard copy of this e-reciept at the time of registration.</h3>
+
+  <button class="btn btn-primary" type="button" onclick="pdf()">Download E-Receipt</button>
+ </div>
+
+{% else %}
+    <div style="margin:15%;margin-top:14%;text-align:center;color:#A347A3;">
+ 
+  <h3>Please register for the Alumni Meet 2017 by paying from the payment section to generate a receipt.</h3>
+</div>
+
+
+
+{% endif %}
+    </div>
+
+      <div id="travelLink" style="display:none" >
+      
+
+           
+            <form id="travelForm" >
+      
+            <div class="row" style="margin-top:3%;">
+                  <div class="col-md-2 col-lg-2 col-sm-2">
+                  </div>
+                <div class="col-md-4 col-lg-4 col-sm-4">
+                    <div>
+                        <div class="box" >
+                              <h4 style="text-align:center">Arrival Plan</h4>
+                            
+                            <div class="row">
+                              <div class="col-md-12 col-lg-12 col-sm-12">
+                                  <div class="row">
+                                      <div class="col-md-6 col-lg-6 col-sm-6">
+                                       <label class="travelForm">Mode<span style="color:red">*</span></label><span><input id="arrival_mode" class="form-control" type="text" value="{{travel.arrival_mode}}"></span>
+                                       <label  class="travelForm">Date of Arrival<span style="color:red">*</span></label><span><input id="arrival_datepicker" class="form-control" type="text" value="{{travel.arrival_date}}"></span>
+                                        
+                                      </div>
+                                      <div class="col-md-6 col-lg-6 col-sm-6">
+                                      <label class="travelForm">Train/Flight No.</label><span><input id="arrival_number" class="form-control" type="text" value="{{travel.arrival_number}}"></span>
+                                       <label  class="travelForm">Time of Arrival<span style="color:red">*</span></label>
+                              <input id="arrival_time" class="form-control" type="text" value="{{travel.arrival_time}}">
+                                      </div>
+                                  </div>
+                                 
+                                  
+                                   <label  class="travelForm">Arrival Point (Varanasi)</label><span><input id="pickup" class="form-control" type="text" value="{{travel.pickup}}"></span>
+                             
+                             
+                              </div>
+                            
+                              
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                   <div class="col-md-4 col-lg-4 col-sm-4 ">
+
+                    <div  style="margin-top:1%;">
+                        <div class="box" >
+                         <h4 style="text-align:center">Departure Plan<span style="font-size:11px"> (optional)</span></h4>
+                            <div id="errorTravelForm" style="color:#E2353E;text-align:center">
+                            </div>
+                            <div class="row">
+                              <div class="col-md-12 col-lg-12">
+                                  
+                                 
+                                  <label  class="travelForm">Date of Departure</label><span><input  id="departure_datepicker" class="form-control" type="text" value="{{travel.departure_date}}"></span>
+                                    <label  class="travelForm">Departure Point</label><span><input id="drop" class="form-control" type="text" value="{{travel.drop}}"></span>
+                              <label  class="travelForm">Time of Departure</label>
+                              <input id="departure_time" class="form-control" type="text" value="{{travel.departure_time}}">
+                              
+                             
+                              </div>
+                              
+                              
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-2 col-lg-2 col-sm-2">
+                  </div>
+                 
+            </div>
+            <div class="row">
+                <div class="col-md-2 col-md-offset-5 col-lg-2 col-lg-offset-5 col-sm-2 col-sm-offset-5">
+                   <button type="submit" class="btn btn-primary" style="width:100%">Submit</button>
+                </div>
+            </div>
+            </form>
+
+    </div>
+
+
+</div>
+
+    
+</div>
+      
+
+
+  </div>
+
+ </div>
+<div class="modal fade" style="display:none;top:5%;" id="terms" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"  aria-hidden="true" data-backdrop="static" data-keyboard="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Terms and Conditions</h4>
+      </div>
+  
+       
+  <div class="modal-body">
+      
+<p><h5><strong>1. Payments</strong></h5>
+<ul>
+<li>
+<p>All bookings made prior to the meeting must be paid in full to guarantee registration. Once payment has been received, an email confirmation and a receipted invoice will be sent. If payment is not made at the time of booking, registration will be provisional. 
+</p>
+</li>
+</ul>
+<br>
+<h5><strong>2. Alterations to Programme - Cancellation/Postponement of Event</strong></h5>
+<ul>
+<li>
+  IIT (BHU) reserves the right to make alterations to the meeting programme, venue and timings.
+</li>
+<li>In the unlikely event of the programme being cancelled by IIT (BHU), necessary adjustments etc. Will be carried out. </li>
+<li>In the event of it being found necessary, for whatever reason, that the meeting is being postponedor the dates being changed, the organisers shall not be liable for any expenditure, damage or loss incurred by the delegate.</li>
+
+</ul>
+<br>
+<h5><strong>3. Speakers</strong></h5>
+
+<ul>
+<li>Views expressed by speakers are their own. IIT (BHU) cannot accept liability for advice given, or views expressed, by any speaker at the meeting or in any material provided to delegates.
+</li>
+</ul>
+<br>
+<h5><strong>4. Photography & Filming</strong></h5>
+<ul>
+<li>For promotional purposes, there may be a professional photographer and video production taking place during the meeting. Delegates who do not wish to be filmed or recorded should advise the organisers by email to IIT (BHU) prior to the event.
+</li>
+
+</ul>
+<br>
+
+<h5><strong>5. Data Protection</strong></h5>
+<ul>
+<li>By submitting registration details, delegates agree to allow IIT (BHU) to contact them regarding their services. Delegates who do not wish to receive such communications please email help.alumnimeet@iitbhu.ac.in. The contact details of registered delegates will be placed on the attendee list which will be passed to sponsoring companies and to all attendees for them to see who is at the meeting for the purpose of networking and meetings. Delegates who do not wish to be included on this list should advise at the time of booking. No personal details of the delegates would be shared with any entity for promotional purposes or any other reason.
+</li>
+</ul>
+<br>
+
+<h5><strong>6. Websites & Links</strong></h5>
+
+<ul>
+<li>The meeting and associated IIT (BHU) websites may link to other websites and networking tools provided for the convenience of the users. The contents of these websites are maintained by their owners, for which IIT (BHU) takes no responsibility. Neither can responsibility be taken for contents of any website linking to this website.
+</li>
+</ul>
+<br>
+
+<h5><strong>7. Insurance</strong></h5>
+<ul>
+<li>It is the responsibility of a delegate to arrange appropriate insurance cover in connection with their attendance at the meeting. IIT (BHU) cannot be held liable for any loss, liability or damage to personal property.
+</li>
+</ul>
+<br>
+
+<h5><strong>8. Speakers : Terms & Conditions</strong></h5>
+
+<ul>
+<li>IIT (BHU) may use the speaker’s name and presentation materials for promoting delegate attendance at the event. Presentations and papers including all associated artwork and illustrations will not be returned unless specifically requested by the author. The papers must be objective and completely free of advertising and commercialism.</li>
+<li>IIT (BHU) may audio and/or video tape the speaker’s session and the recording may be reproduced and sold as part of the overall meeting materials. This allows delegates to purchase audio/video copies of presentations that they may have been unable to attend.</li>
+<li> IIT (BHU) may reproduce copies of the speaker’s presentation (eg. PowerPoint slides or supporting
+handouts) on paper and/or electronically and these may be sold as part of the overall hand-out materials during the meeting and after the event. Any acknowledgement regarding Copyright or support should be included at the end of the abstract/presentation, as these will be distributed to the meeting delegates.</li>
+<li>Speakers who do not wish to give permission for the above terms and conditions, please email to chair.alumnimeet@iitbhu.ac.in before the commencement of the Alumni meet.</li>
+   </ul>
+</p>
+      </div>
+      <div class="modal-footer">
+        
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+</div>
+<script type="text/javascript" src="/static/js/ajax_travel.js"></script>
+<script type="text/javascript">
+	
+var linkList=["information","payment","reciept","travel"];
+function paymentLinkModule(x){
+
+for (var i=0;i<4;i++){
+//var idTag=list[i].replace(/\s+/g);
+var id="#"+linkList[i]+"Link";
+$(id).hide();
+var idTag=id="#"+linkList[i];
+$(idTag).css("background-color","rgba(51,51,102,0.9)");
+}
+
+$("#"+linkList[x]+"Link").show();
+if(x==1){
+  paymentPage(1);
+}
+
+$("#"+linkList[x]).css("background-color","rgba(221,72,20,0.9)");
+
+}
+$("#privacyPolicy").click(function contact_open(){
+
+$('#privacy').modal('show');
+});
+$("#termsConditions").click(function contact_open(){
+
+$('#terms').modal('show');
+});
+$("#termsConditionsFooter").click(function contact_open(){
+
+$('#terms').modal('show');
+});
+
+
+//console.log(window.location.host);
+$("#memberList").click(function contact_open(){
+
+$('#member').modal('show');
+});
+
+$.fn.typer = function(text, options){
+    options = $.extend({}, {
+        char: ' ',
+        delay: 1000,
+        duration: 600,
+        endless: true
+    }, options || text);
+
+    text = $.isPlainObject(text) ? options.text : text;
+
+    var elem = $(this),
+        isTag = false,
+        c = 0;
+    
+    (function typetext(i) {
+        var e = ({string:1, number:1}[typeof text] ? text : text[i]) + options.char,
+            char = e.substr(c++, 1);
+
+        if( char === '<' ){ isTag = true; }
+        if( char === '>' ){ isTag = false; }
+        elem.html(e.substr(0, c));
+        if(c <= e.length){
+            if( isTag ){
+                typetext(i);
+            } else {
+                setTimeout(typetext, options.duration/10, i);
+            }
+        } else {
+            c = 0;
+            i++;
+            
+            if (i === text.length && !options.endless) {
+                return;
+            } else if (i === text.length) {
+                i = 0;
+            }
+            setTimeout(typetext, options.delay, i);
+        }
+    })(0);
+};
+
+//if("{{alumniDetails.register}}".match("0"))
+{
+$('#type').typer(['<b>Welcome,</b>'+'  {{alumniDetails.firstName}}', 'Alumni Meet 2017 is over now.']);
+}
+$(function() {
+    $( "#datepicker" ).datepicker({ changeYear: true ,yearRange: "-80:-1",dateFormat: "yy-dd-mm"});
+  });
+
+
+function paymentPage(x){
+var id="#page"+x;
+
+
+
+for(var i=1;i<=4;i++){
+      if(i==x){
+          
+            if(i==4 && !validate_names()){
+                $(id).hide();
+                $("#page"+3).show();
+                $("#errorPaymentForm3").text("Use only characters and spaces");
+            }
+            else if(i==4){
+              if(validate_names()==$("#persons_count").val()){
+                $(id).show();
+                if ($("#delegate").val().match("Indian Delegate")){
+
+                         var amt=($("#persons_count").val()-1)*parseInt("{{amount_india_accomp}}")+parseInt("{{amount_india}}");
+                        $("#total_amount").text("Rs."+amt);
+                         $("#amount").text("Rs."+"{{amount_india}}")
+                         $("#amount_accomp").text("Rs."+"{{amount_india_accomp}}") 
+                         $("#amount_field").val(amt);
+                              }
+                  else{
+                  	var amt=($("#persons_count").val()-1)*parseInt("{{amount_foreign_accomp}}")+parseInt("{{amount_foreign}}");
+                      $("#total_amount").text("$"+amt);
+                        $("#amount").text("$"+"{{amount_foreign}}")
+						$("#amount_accomp").text("$"+"{{amount_foreign_accomp}}")
+                        $("#amount_field").val(amt);
+                  }
+                  $("#person").text($("#persons_count").val());
+              }
+              else{
+                  $("#errorPaymentForm3").text("Total persons should be "+$("#persons_count").val());
+                  $("#page"+3).show();
+              }
+            }
+            else if(i==3 && !validate_persons()) {
+              
+              $("#page"+2).show();
+            }
+
+            else{
+                $(id).show();
+                $("#errorPaymentForm2").text("");
+                $("#errorPaymentForm3").text("");
+            }
+            }
+      else{
+          hideId="#page"+i;
+          $(hideId).hide();
+
+          }
+
+
+      }
+}
+function validate_names(){
+
+
+  var count=0;
+  var filled=0;
+  for(var a=1;a<=6;a++){
+      var RegExpression = /^[a-zA-Z\s]*$/; 
+      var value=$("#person"+a).val().trim();
+      if(!RegExpression.test(value)){
+        console.log("0");
+          return 0;
+        //$("errorPaymentForm3").text("Only characters and spaces are allowed")
+      }
+      else if(!(value=="")){
+        filled+=1;
+      }
+      else{
+       // $("errorPaymentForm3").text("")
+      count+=1;
+      }
+
+
+}
+
+
+    if(count+filled==6){
+      return filled;
+    }
+
+}
+
+
+
+function validate() {
+        if (document.getElementById('field3').checked) {
+            $("#presentaddress").val($('#address').val() );
+            $("#presentcity").val($('#city').val() );
+  $("#presentstate").val($('#state').val() ); 
+            $("#presentcountry").val($('#country').val());
+      $("#presentzipCode").val($('#zipCode').val());
+                
+  } else {
+            $("#presentaddress").val('');
+            $("#presentcity").val('');
+            $("#presentcountry").val('');
+      $("#presentzipCode").val('');
+$("#presentstate").val("");
+        }
+    }
+
+    $(function() {
+    $( "#arrival_datepicker" ).datepicker({ changeYear: true ,yearRange: "-0:+1",dateFormat: "yy-dd-mm"});
+  });
+
+$(function() {
+    $( "#departure_datepicker" ).datepicker({ changeYear: true ,yearRange: "-0:+1",dateFormat: "yy-dd-mm"});
+  });
+
+function validate_persons() {
+  if( $('#persons_count').val() >=1 && $('#persons_count').val()<=6)
+  {
+    return 1;
+
+  } // or $(this).val()
+  else if($('#persons_count').val()>6){
+$("#errorPaymentForm2").text("No. of persons should be between 1 to 6");
+  return 0;
+
+  }
+  else{
+$("#errorPaymentForm2").text("Fields can not be left empty");
+return 0;
+
+  }
+}
+$("#paymentForm").submit(function( event ) {
+ 
+  if($("#checkboxTerms").is(":checked")){
+     
+     return true;
+
+  }
+  else{
+    event.preventDefault();  
+     $("#errorPaymentForm4").text("Please accept terms and conditions");
+ 
+  }
+  
+});
+
+
+
+ function pdf(){
+window.location="https://"+window.location.host+"/portal/receipt";
+}
+
+function facultyCheck(){
+
+       if (document.getElementById('faculty').checked){
+        
+        $("#courseGroup").hide();
+        $("#year").hide();
+        $("#yearLabel").hide();
+        $("#courseLabel").hide();
+        
+        
+        
+       }
+       else{
+        $("#courseGroup").show();
+        $("#year").show();
+        $("#yearLabel").show();
+        $("#courseLabel").show();
+       }
+
+
+    }
+
+</script>
+
+
+ {% endblock body %} 

@@ -1,0 +1,19 @@
+<html>
+<head>
+<title>Redirecting to PayU for Payment</title>
+<script>
+function redirect_for_payment_at_payu() {
+  var payu_form = document.forms.payu_form;
+  payu_form.submit();
+}
+</script>
+</head>
+<body onload="redirect_for_payment_at_payu();">
+<form action="{{ action }}" method="post" name="payu_form">{% csrf_token %}
+{{ form.as_p }}
+
+</form>
+<img style="margin:50%;" src="/static/images/loader.gif" height="200px" width="200px">
+
+<body>
+<html>

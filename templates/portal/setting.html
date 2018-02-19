@@ -1,0 +1,136 @@
+{% extends "base2.html" %}
+
+ 
+          {% block title %} IIT BHU Alumni Portal {% endblock %}
+         
+
+     {% block body %} 
+<link rel="stylesheet" type="text/css" href="/static/css/demo.css" />
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+   <script src="/static/js/ajax_story.js" ></script>
+<script>
+        $(document).ready(function(){
+            $("#settingsubmit").click(function(){
+                $('#submitalert').removeClass('hide').addClass('alert alert-success alert-dismissible').slideDown();
+            });
+        });
+</script>
+    <div class="container">
+    <div class="row" style="min-height:571px;">
+
+        <!------------------Alert On setting change starts---------------------->
+    <div class="hide" id="submitalert" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>Success!</strong> Settings have been Modified
+</div>
+        <!------------------Alert On setting change starts---------------------->
+<div class="container" style="padding-top: 60px;">
+    
+
+  <div class="row">
+    <!-- left column -->
+    <!---Right Column-->
+      <div class="col-lg-8 col-md-10 col-md-offset-2 col-sm-12 col-xs-12 col-lg-offset-2 shadow-done roundcornerbig">
+
+          <div class="panel panel-info paddingtop">
+                  <div class="panel-heading">
+                      <h3 class="panel-title text-center">Privacy Setting</h3>
+                    </div>
+                          <div class="panel-body">
+                     <div class="row" style="color:#4dd2ff;padding:10px;">
+                         <div class="col-sm-12">
+<!--                            <span class="glyphicon glyphicon-plus"></span><span> Add a College Story Of Yours!.</span>-->
+                             <form class="form-horizontal" method="post" action="/portal/setting/"role="form" data-toggle="validator">
+                                 {% csrf_token %}
+                                    <div class="form-group">
+                                        <label for="privacyemail" class="col-lg-3 col-md-3 col-xs-12 control-label">Email</label>
+                                        <div class="col-lg-5 col-md-8 col-xs-12 input-group">
+                                            <span class="input-group-addon">@</span>
+
+                                            <select name="privacy_email" value="{{profile_data.privacy_Email}}" class="form-control roundcorner" required>
+                                              <option value="{{profile_data.privacy_Email}}" selected="selected">{{profile_data.privacy_Email}}</option>
+                                              <option >Only Me</option>
+                                              <option >Everyone</option>
+                                              <option>Only Alumni</option>
+                                              <option>Only Faculty</option>
+                                              <option>Only Students</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="privacymobile" class="col-lg-3 col-md-3 col-xs-12 control-label">Mobile</label>
+                                        <div class="col-lg-5 col-md-8 col-xs-12 input-group">
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-phone"></span></span>
+                                            <select name="privacy_mobile" value="{{profile_data.privacy_Mobile}}" class="form-control roundcorner" required>
+                                              <option value="{{profile_data.privacy_Mobile}}" selected="selected">{{profile_data.privacy_Mobile}}</option>
+                                              <option >Only Me</option>
+                                              <option >Everyone</option>
+                                              <option>Only Alumni</option>
+                                              <option>Only Faculty</option>
+                                              <option>Only Students</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="privacypaddress" class="col-lg-3 col-md-3 col-xs-12 control-label">Permanent Address</label>
+                                        <div class="col-lg-5 col-md-8 col-xs-12 input-group">
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-home"></span></span>
+                                            <select name="privacy_paddress" value="{{profile_data.privacy_PAddress}}" class="form-control roundcorner" required>
+                                              <option value="{{profile_data.privacy_PAddress}}" selected="selected">{{profile_data.privacy_PAddress}}</option>
+                                              <option >Only Me</option>
+                                              <option >Everyone</option>
+                                              <option>Only Alumni</option>
+                                              <option>Only Faculty</option>
+                                              <option>Only Students</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="heading" class="col-lg-3 col-md-3 col-xs-12 control-label">Current Address</label>
+                                        <div class="col-lg-5 col-md-8 col-xs-12 input-group">
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-home"></span></span>
+                                            <select name="privacy_caddress" value="{{profile_data.privacy_CAddress}}" class="form-control roundcorner" required>
+                                              <option value="{{profile_data.privacy_CAddress}}" selected="selected">{{profile_data.privacy_CAddress}}</option>
+                                              <option >Only Me</option>
+                                              <option >Everyone</option>
+                                              <option>Only Alumni</option>
+                                              <option>Only Faculty</option>
+                                              <option>Only Students</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-xs-12 col-sm-offset-2 col-sm-3">
+                                            <input type="submit" id="settingsubmit" class="btn btn-warning btn-lg roundcorner"/>
+                                        </div>
+                                    </div>
+                            </form>
+                         </div>
+                     </div>
+                     </div>
+                   </div>
+                </div>
+            </div>
+            
+            </div>
+          </div>
+      </div><!--Right COlumn ends-->
+<!----------------------------------------------Profile Page Ends------------------------------------------------------------------------->
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+   
+    <!-- Custom js-->
+    <script>
+        $(document).ready(function(){
+                $("#forumnav").removeClass('active');
+                $("#settingnav").removeClass('active');
+                $("#searchnav").removeClass('active');
+                $("#forumnav").removeClass('active');
+                $("#dropdownnav").addClass('active');
+                $("#initiativenav").removeClass('active');
+                $("#guesthousenav").removeClass('active');
+                $("#notificationnav").removeClass('active');
+        });
+</script>
+    {% endblock %} 

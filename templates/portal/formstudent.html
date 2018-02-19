@@ -1,0 +1,245 @@
+{% extends "base1.html" %}
+{% comment %}
+  This is the main template for all portal pages.
+{% endcomment %}
+
+{% block head %}
+  <title> {% block title %}{% endblock %}</title>
+{% block style %}
+<style>
+#success{
+margin-top:2%;
+border:2px solid;
+border-radius:6px;
+padding:5%;
+background-color: #FFFFFF;
+}
+
+.box{
+
+	border:1px solid #C2C2A3;
+	padding:10px;
+	border-radius: 5px;
+	margin-bottom:2%;
+	margin-top:2%;
+}
+#proceed{
+margin-top:2%;
+
+}
+
+
+</style>
+{% endblock %}
+{% endblock %}
+{% block body %}
+
+
+{% block content %}
+<div class="background">
+<div class="container-fluid" >
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
+			
+			<div id="success">
+				<img class="img img-responsive" src="/static/images/IITBHULogo1.png"  style="margin-left:42%;margin-top:-4%" height=70 width=70>
+				<h3 style="text-align:center">Student Registration Form</h3>				
+				<form class="form-group" action="/portal/verify_student/{{hash}}/?backend={{ backend }}" method="post">                    
+					 {% csrf_token %}
+					<!-- <input name="backend" value="{{ backend }}" type="hidden"/> -->
+   					<div id="errors" style="color:red">
+						{{error}}
+					</div>
+					<h5><strong>Personal Details</strong></h5>
+					<div class="box">
+					<div class="row">
+						<div class="col-md-6">
+						<span id="errors" style="color:red">{{form.firstName.errors}}</span>
+							<label>{{form.firstName.label}}<span style="color:red" class="float-right">&nbsp;*</span></label>
+							{{form.firstName}}
+						</div>	
+						<div class="col-md-6">
+						<span id="errors" style="color:red">{{form.lastName.errors}}</span>
+						<label>{{form.lastName.label}}<span style="color:red" class="float-right">&nbsp;*</span></label>
+							{{form.lastName}}
+						</div>	
+
+					</div>	
+					<br>
+
+					<div class="row">
+					
+						<div class="col-md-3">
+						<span id="errors" style="color:red">{{form.gender.errors}}</span>
+						<label>{{form.gender.label}}<span style="color:red" class="float-right">&nbsp;*</span></label>
+							{{form.gender}}
+						</div>		
+						
+						<div class="col-md-9">
+						<span id="errors" style="color:red">{{form.dob.errors}}</span>
+						<label>{{form.dob.label}}<span style="color:red" class="float-right">&nbsp;*</span></label>
+							<br>{{form.dob}}
+						</div>	
+
+					</div>
+
+					</div>
+
+					<h5><strong>Academic Details</strong></h5>
+					<div class="box">
+							<div class="row">
+										
+						<div class="col-md-12">
+
+						<span id="errors" style="color:red">{{form.branch.errors}}</span>
+						<label>{{form.branch.label}}<span style="color:red" class="float-right">&nbsp;*</span></label>
+							{{form.branch}}
+						</div>	
+						
+					
+						</div>
+					<div class="row">
+                        <div class="col-md-4">
+                        <span id="errors" style="color:red">{{form.roll.errors}}</span>
+							<label>{{form.roll.label}}<span style="color:red" class="float-right">&nbsp;*</span></label>
+							{{form.roll}}
+						</div>
+					   <div class="col-md-4">	
+					   <span id="errors" style="color:red">{{form.course.errors}}</span>
+                            <label>{{form.course.label}}<span style="color:red" class="float-right">&nbsp;*</span></label>
+                                {{form.course}}
+						</div>
+						<div class="col-md-4">
+						 <span id="errors" style="color:red">{{form.year.errors}}</span>
+							<label>{{form.year.label}}<span style="color:red" class="float-right">&nbsp;*</span></label>
+							{{form.year}}
+						</div>
+                        
+                    </div>
+</div>
+<h5><strong>Contact Details</strong></h5>
+				<div class="box">
+					<div class="row">
+						<div class="col-md-12">
+						<span id="errors" style="color:red">{{formAddPermanent.address.errors}}</span>
+						<label>Permanent Address<span style="color:red" class="float-right">&nbsp;*</span>:</label>
+							{{formAddPermanent.address}}
+						</div>	
+
+					</div>	
+					<div class="row">
+						<div class="col-md-6">
+						<span id="errors" style="color:red">{{formAddPermanent.city.errors}}</span>
+							<label>{{formAddPermanent.city.label}}<span style="color:red" class="float-right">&nbsp;*</span></label>
+							{{formAddPermanent.city}}
+						</div>	
+						<div class="col-md-6">
+						<span id="errors" style="color:red">{{formAddPermanent.state.errors}}</span>
+						<label>{{formAddPermanent.state.label}}<span style="color:red" class="float-right">&nbsp;*</span></label>
+							{{formAddPermanent.state}}
+						</div>	
+
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+						<span id="errors" style="color:red">{{formAddPermanent.country.errors}}</span>
+							<label>{{formAddPermanent.country.label}}<span style="color:red" class="float-right">&nbsp;*</span></label>
+							{{formAddPermanent.country}}
+						</div>	
+						<div class="col-md-6">
+						<span id="errors" style="color:red">{{formAddPermanent.zipCode.errors}}</span>
+						<label>{{formAddPermanent.zipCode.label}}<span style="color:red" class="float-right">&nbsp;*</span></label>
+							{{formAddPermanent.zipCode}}
+						</div>	
+
+					</div>
+				</div>
+				<div class="box">
+					<div class="row">
+						<div class="col-md-12">
+						<span id="errors" style="color:red">{{formAddPresent.addressPresent.errors}}</span>
+						<label>Present Address<span style="color:red" class="float-right">&nbsp;*</span>:</label><br>
+<span style="font-weight:100;font-style:italic">If the present address is same as the permanent address, check this box &nbsp;  
+<input type="checkbox" id="field3" name="field3" value="" onclick="validate()"></span><br><br>
+
+							{{formAddPresent.addressPresent}}
+						</div>	
+
+					</div>	
+					<div class="row">
+						<div class="col-md-6">
+
+						<span id="errors" style="color:red">{{formAddPresent.cityPresent.errors}}</span>
+							<label>{{formAddPresent.cityPresent.label}}<span style="color:red" class="float-right">&nbsp;*</span></label>
+							{{formAddPresent.cityPresent}}
+						</div>	
+						<div class="col-md-6">
+						<span id="errors" style="color:red">{{formAddPresent.statePresent.errors}}</span>
+						<label>{{formAddPresent.statePresent.label}}<span style="color:red" class="float-right">&nbsp;*</span></label>
+							{{formAddPresent.statePresent}}
+						</div>	
+
+					</div>
+
+				<div class="row">
+						<div class="col-md-6">
+						<span id="errors" style="color:red">{{formAddPresent.countryPresent.errors}}</span>
+							<label>{{formAddPresent.countryPresent.label}}<span style="color:red" class="float-right">&nbsp;*</span></label>
+							{{formAddPresent.countryPresent}}
+						</div>	
+						<div class="col-md-6">
+						<span id="errors" style="color:red">{{formAddPresent.zipCodePresent.errors}}</span>
+						<label>{{formAddPresent.zipCodePresent.label}}<span style="color:red" class="float-right">&nbsp;*</span></label>
+							{{formAddPresent.zipCodePresent}}
+						</div>	
+
+					</div>
+
+				</div>	
+					<div class="row">
+						<div class="col-md-12">
+						<span id="errors" style="color:red">{{form.mobile.errors}}</span>
+						<label>{{form.mobile.label}}<span style="color:red" class="float-right">&nbsp;*</span></label>
+							{{form.mobile}}
+						</div>	
+						
+
+					</div>	
+
+ <button id="proceed" style="margin-top:1%;" type="submit" class="btn btn-primary pull-right ">Proceed</button>	
+
+
+
+   </div>
+		
+				</form>
+
+
+			</div>
+		</div>
+	</div>
+
+</div>
+</div>
+  
+<script type="text/javascript">
+	
+	function validate() {
+        if (document.getElementById('field3').checked) {
+            $("#presentaddress").val($('#address').val() );
+            $("#presentcity").val($('#city').val() );
+	$("#presentstate").val($('#state').val() );	
+            $("#presentcountry").val($('#country').val());
+	    $("#presentzipCode").val($('#zipCode').val());
+                
+	} else {
+            $("#presentaddress").val('');
+            $("#presentcity").val('');
+            $("#presentcountry").val('');
+	    $("#presentzipCode").val('');
+$("#presentstate").val("");
+        }
+    }
+</script>
+{% endblock %}
+{% endblock %}

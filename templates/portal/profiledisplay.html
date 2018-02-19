@@ -1,0 +1,296 @@
+{% extends "base2.html" %}
+
+ 
+          {% block title %} IIT BHU Alumni Portal {% endblock %}
+         
+
+     {% block body %} 
+       <script src="/static/js/ajax_upload.js" ></script>
+
+    
+<script>
+function upload_open(){
+
+
+$("#uploadModal").modal("show");
+
+}
+
+
+
+</script>
+  {% load tempstory %}
+   {% load timesince %} 
+   {% load el_pagination_tags %}
+<!------------------------------------------------------------Navigation Bar Ends--------------------------------------------------------------->
+<!----------------------------------------------Profile Page Starts------------------------------------------------------------------------>
+<div class="container" style="padding-top: 60px;">
+  <div class="row  " style="min-height:1400px;">
+    <!-- left column -->
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="panel panel-success shadow-done roundcornerbig">
+                  <div class="panel-body">
+                    <div class="text-center">
+                        <img src="{{profilesearch.photo.url}}" id="photo_placeholder" class="avatar img-circle img-thumbnail img-responsive" height="200px" width="200px" alt="avatar"><br><br>
+                        <h3>{{profilesearch.firstName}} {{profilesearch.lastName}}</h3>
+                        {% if categorysearch == 'alumni' or categorysearch == 'student' %}
+                          <h3>{{categorysearch | title}}</h3>
+                          <h3>Batch of {{profilesearch.year}}</h3>
+                        {% elif categorysearch == 'faculty' %}
+                          <h3>{{categorysearch | title}}</h3>
+                          <h3>{{profilesearch.designation}} at IIT B.H.U</h3>
+                        {% endif %}
+                          <h3>IIT BHU(Varanasi)</h3>
+                      </div>
+                  </div>
+              </div>
+          </div>
+         <!---Right Column-->
+      <div class="col-md-8 col-sm-6 col-xs-12 shadow-done roundcornerbig">
+          <ul class="nav nav-pills nav-justified">
+            <li id="FeedCheck"><a data-toggle="tab" href="#feed">My Feed</a></li>
+            <li  id="ProfileCheck" class="active"><a data-toggle="tab" href="#profile">Profile</a></li>
+            <li id="InterestCheck"><a data-toggle="tab" href="#interest">Interests</a></li>
+          </ul>
+
+          <div class="tab-content">
+            <div id="feed" class="tab-pane fade ">
+                <div class="container">
+                  {% if story_data %}
+                    <div class="col-xs-12">
+                        <div class="endless_page_template" id="story_data">
+                                    {% include 'portal/profile_story_paginate.html' %}
+                                
+                      </div>
+                             
+                         </div>
+                        {% else %}
+                          <div class="notifications-wrapper">
+                                  <a class="content" href="#">
+                                    <div class="notification-item">
+                                      <h4 class="item-title">No Story posted yet</h4>
+                                    </div>   
+                                  </a>
+                                  </div>
+                         {% endif %}
+                </div>
+            </div>
+            <div id="profile" class="tab-pane fade in active">
+                <div class="zero-margin-left" id="profilecontent">
+                        <!-----------------------PErsonal Section Starts---------------->
+                        <div class="panel panel-info">
+                          <div class="panel-heading">
+                            <h3 class="panel-title">Personal</h3>
+                          </div>
+                          <div class="panel-body">
+                            <div class="row">
+                                <h5 class="item-pad col-sm-12 col-md-5 col-lg-5">First Name: {{profilesearch.firstName}}</h5>
+                                <h5 class="item-pad col-sm-12 col-md-5 col-lg-5">Last Name: {{profilesearch.lastName}}</h5>
+                                <h5 class="item-pad col-sm-12 col-md-5 col-lg-5">Gender: {{profilesearch.gender}}</h5>
+                                <h5 class="item-pad col-sm-12 col-md-5 col-lg-5">Birthday: {{profilesearch.dob}}</h5>
+                            </div>
+                          </div>
+                        </div>
+                        <!-------------College Section Starts-------------->
+                        {% if categorysearch == 'alumni' or categorysearch == 'student' %}
+                        <div class="panel panel-info">
+                          <div class="panel-heading">
+                            <h3 class="panel-title">College</h3>
+                          </div>
+                          <div class="panel-body">
+                                <div class="row">
+                                    <h5 class="item-pad col-sm-12 col-md-5 col-lg-5">Roll No:{{profilesearch.roll}}</h5>
+                                    <h5 class="item-pad col-sm-12 col-md-5 col-lg-5">Batch:{{profilesearch.year}}</h5>
+                                </div>
+                                <div class="row">
+                                    <h5 class="item-pad col-sm-12 col-md-5 col-lg-5">Branch: {{profilesearch.branch}}</h5>
+                                    <h5 class="item-pad col-sm-12 col-md-5 col-lg-5">Course: {{profilesearch.course}}</h5>
+                                </div>
+                          </div>
+                        </div>
+                        {% endif %}
+                        {% if categorysearch == 'alumni' or categorysearch == 'faculty'%}
+                        <!-----------------------COmpany Section Starts---------------->
+                        <div class="panel panel-info">
+                          <div class="panel-heading">
+                            {% if categorysearch == 'alumni'%}
+                            <h3 class="panel-title">Company</h3>
+                            {% elif categorysearch == 'faculty' %}
+                            <h3 class="panel-title">IIT B.H.U</h3>
+                            {% endif %}
+                          </div>
+                          <div class="panel-body">
+                            <div class="row">
+                              {% if categorysearch == 'alumni' %}
+                                <h5 class="item-pad col-sm-12 col-md-12 col-lg-12">Current: {{profilesearch.organisation}}</h5>
+                              {% endif %}
+                              {% if categorysearch == 'faculty' %}
+                                <h5 class="item-pad col-sm-12 col-md-12 col-lg-12">Current: IIT B.H.U</h5>
+                                <h5 class="item-pad col-sm-12 col-md-5 col-lg-5">Joining Year:{{profilesearch.year}}</h5>
+                                <h5 class="item-pad col-sm-12 col-md-5 col-lg-5">Dept.: {{profilesearch.branch}}</h5>
+                              {% endif %}
+                              {% if categorysearch == 'alumni' or categorysearch == 'faculty' %}
+                                <h5 class="item-pad col-sm-12 col-md-12 col-lg-12">Designation: {{profilesearch.designation}}</h5>
+                              {% endif %}
+                            </div>
+                          </div>
+                        </div>
+                        {% endif %}
+                        <!-----------------------Contact Section Starts---------------->
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                              <h3 class="panel-title">Contact</h3>
+                            </div>
+                            <div class="panel-body">
+                                  <div class="row">
+                                               <h5 class="item-pad col-sm-12 col-md-12 col-lg-12">
+                                                   {% if profilesearch.privacy_Email == 'Everyone' or  profilesearch.privacy_Email == 'Only Alumni' and category_current_user == 'alumni' or profilesearch.privacy_Email == 'Only Faculty' and category_current_user == 'faculty' or profilesearch.privacy_Email == 'Only Student' and category_current_user == 'student' %}
+                                                   <span class='glyphicon glyphicon-globe'></span>
+                                                   Email:  {{profilesearch.email}}
+                                                   {% elif not contacts_data  or contacts_data.email_requested == 'notrequested' %}
+                                                   <span class='glyphicon glyphicon-lock' ></span>
+                                                  Email: <a href={% url 'requestcontact' categorysearch '0' profilesearch.id %} >Request For Email</a>
+                                                   {% elif contacts_data.email_requested == 'accepted' %}
+                                                      <span class='glyphicon glyphicon-lock'></span>
+                                                   Email:{{profilesearch.email}}
+                                                   {% elif contacts_data.email_requested == 'requested' %}
+                                                   <span class='glyphicon glyphicon-lock'></span>
+                                                   Email: Already Requested
+                                                   {% else %}
+                                                   fuck
+                                                   {% endif %}
+                                                   </h5>
+                                               <h5 class="item-pad address_correct col-sm-12 col-md-12 col-lg-12">
+                                                    {% if profilesearch.privacy_CAddress == 'Everyone' or profilesearch.privacy_CAddress == 'Only Alumni' and category_current_user == 'alumni' or profilesearch.privacy_CAddress == 'Only Faculty' and category_current_user == 'faculty' or profilesearch.privacy_CAddress == 'Only Student' and category_current_user == 'student' %}
+                                                    <address>
+                                                   <span class='glyphicon glyphicon-globe'></span>
+                                                   Current Address<br>
+                                                   {{profilesearch.address_present}}<br>
+                                                   {{profilesearch.city_present}}<br>
+                                                   {{profilesearch.state_present}}<br>
+                                                   Pin:{{profilesearch.zip_present}}<br>
+                                                   {{profilesearch.country_present}}
+                                                   </address>
+                                                   {% else %}
+                                                   <span class='glyphicon glyphicon-lock'></span>
+                                                   Current Address: Not Shared
+                                                   {% endif %}
+                                                   
+                                                   </h5>
+                                               <h5 class="item-pad address_correct col-sm-12 col-md-12 col-lg-12">
+                                                {% if profilesearch.privacy_PAddress == 'Everyone' or  profilesearch.privacy_PAddress == 'Only Alumni' and category_current_user == 'alumni' or profilesearch.privacy_PAddress == 'Only Faculty' and category_current_user == 'faculty' or profilesearch.privacy_PAddress == 'Only Student' and category_current_user == 'student' %}
+                                                <address>
+                                                   <span class='glyphicon glyphicon-globe'></span>
+                                                   Permanent Address<br>
+                                                   {{profilesearch.address_permanent}}<br>
+                                                   {{profilesearch.city_permanent}}<br>
+                                                   {{profilesearch.state_permanent}}<br>
+                                                   Pin:{{profilesearch.zip_permanent}}<br>
+                                                   {{profilesearch.country_permanent}}
+                                                   </address>
+                                                   {% else %}
+                                                   <span class='glyphicon glyphicon-lock'></span>
+                                                   Permanent Address: Not Shared
+                                                   {% endif %}
+                                                   </h5>
+
+                                               <h5 class="item-pad col-sm-12 col-md-12 col-lg-12">
+                                                    {% if profilesearch.privacy_Mobile == 'Everyone' or  profilesearch.privacy_Mobile == 'Only Alumni' and category_current_user == 'alumni' or profilesearch.privacy_Mobile == 'Only Faculty' and category_current_user == 'faculty' or profilesearch.privacy_Mobile == 'Only Student' and category_current_user == 'student' %}
+                                                   <span class='glyphicon glyphicon-globe'></span>
+                                                   Mobile:{{profilesearch.mobile}}
+                                                   {% elif not contacts_data or contacts_data.mobile_requested == 'notrequested' %}
+                                                   <span class='glyphicon glyphicon-lock'></span>
+                                                    Mobile: <a href={% url 'requestcontact' categorysearch '1' profilesearch.id %} >Request For Mobile</a>
+                                                    {% elif contacts_data.mobile_requested == 'accepted' %}
+                                                      <span class='glyphicon glyphicon-lock'></span>
+                                                   Mobile:{{profilesearch.mobile}}
+                                                   {% elif contacts_data.mobile_requested == 'requested' %}
+                                                   <span class='glyphicon glyphicon-lock'></span>
+                                                   Mobile: Already Requested
+                                                   {% else %}
+                                                   {% endif %}
+                                                 </h5>
+                                  </div>
+                            </div>
+                          <!--Contact Section ended above-->
+                        </div>
+                </div>
+            </div>
+            <div id="interest" class="tab-pane fade">
+                <div class="container">
+                     <div class="row">
+                         {% if interest_data %}
+                         
+                             <ul>
+                             {% for interest in interest_data %}
+                              <div class="col-xs-12">                                
+                                  <li class="row">
+                                      <div class="col-xs-9">
+                                        <h3 >{{interest.heading_interest | title }} </h3>
+                                      </div>
+                                      <div class="col-xs-12">
+                                        <h5 class="interestcontent">{{ interest.content_interest | title }}</h5>
+                                      </div>
+                                      <div class=col-xs-12>
+                                        <h5>Posted:<cite title="Source Title">{{interest.date_interest | age}}</cite>
+                                        </h5>
+                                      </div>
+                                  </li>
+                              </div>
+                              <hr>
+                              {% endfor %}
+                              </ul>
+                                
+                                {% else %}
+                                <div class="col-xs-12">
+                                <div class="notifications-wrapper">
+                                  <a class="content" href="#">
+                                    <div class="notification-item">
+                                      <h4 class="item-title">No interest posted yet</h4>
+                                    </div>   
+                                  </a>
+                                  </div>
+                                </div>
+                                {% endif %}   
+                     </div>
+                </div>          
+            </div>
+      <!--Interest Ended above-->
+      </div>
+      <!--Right COlumn ends-->
+      </div>
+      </div>
+      </div>
+ <script src="/static/js/readmore.min.js"></script>
+    <script>
+      $(document).ready(function(){
+          $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            $.getScript("/static/js/readmore.min.js",function(){
+              $('.storiescontent').readmore();
+            });
+          });
+
+      });
+    </script>
+    <script src="/static/js/endless-pagination.js"></script>
+    <script>$('.storiescontent').readmore();</script>
+    <script>
+        $('#story_data').endlessPaginate({
+            onCompleted: function(data) {
+                $.getScript("/static/js/readmore.min.js",function(){
+              $('.storiescontent').readmore();
+            })
+        }});
+      </script>
+      <script>
+        $(document).ready(function(){
+                $("#forumnav").removeClass('active');
+                $("#settingnav").removeClass('active');
+                $("#searchnav").addClass('active');
+                $("#forumnav").removeClass('active');
+                $("#notificationnav").removeClass('active');
+                $("#guesthousenav").removeClass('active');
+
+        });
+</script>
+    {% endblock %} 

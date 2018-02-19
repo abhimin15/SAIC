@@ -1,0 +1,244 @@
+
+
+#imgContainer img{
+
+width:200px;
+height:200px;
+position:center;
+
+}
+.link{
+
+height:30px;
+background: rgba(242,246,248,1);
+background: -moz-linear-gradient(top, rgba(242,246,248,1) 0%, rgba(216,225,231,1) 46%, rgba(224,239,249,1) 79%, rgba(181,198,208,1) 100%);
+background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(242,246,248,1)), color-stop(46%, rgba(216,225,231,1)), color-stop(79%, rgba(224,239,249,1)), color-stop(100%, rgba(181,198,208,1)));
+background: -webkit-linear-gradient(top, rgba(242,246,248,1) 0%, rgba(216,225,231,1) 46%, rgba(224,239,249,1) 79%, rgba(181,198,208,1) 100%);
+background: -o-linear-gradient(top, rgba(242,246,248,1) 0%, rgba(216,225,231,1) 46%, rgba(224,239,249,1) 79%, rgba(181,198,208,1) 100%);
+background: -ms-linear-gradient(top, rgba(242,246,248,1) 0%, rgba(216,225,231,1) 46%, rgba(224,239,249,1) 79%, rgba(181,198,208,1) 100%);
+background: linear-gradient(to bottom, rgba(242,246,248,1) 0%, rgba(216,225,231,1) 46%, rgba(224,239,249,1) 79%, rgba(181,198,208,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f6f8', endColorstr='#b5c6d0', GradientType=0 );border-top:1px solid #00056F;
+padding-top:2%;
+cursor:pointer;
+
+
+}
+.boxChronicle{
+
+width:200px;
+height:200px;
+border:solid 1px rgba(178,178,178,1);
+margin:10%;
+background: rgba(221,221,221,1);
+cursor:pointer;
+}
+.boxChronicle:hover{
+background: rgba(221,221,221,0.5);
+
+}
+
+.boxText{
+padding-top: 40%;
+padding-left: 25%;
+font-size: 20px;
+padding-right: 25%;
+text-align: center;
+
+}
+
+.borderBottom{
+border-bottom:1px solid #b0dfff;
+
+}
+.borderTop{
+border-top:1px solid #b0dfff;
+  
+}
+div.show-image:hover img{
+  opacity:0.5;
+}
+div.show-image:hover input{
+  display:block;
+}
+div.show-image input{
+  position:absolute;
+  display:none;
+}
+div.show-image input.update{
+  top:90px;
+  left:30px;
+}
+div.show-image input.delete{
+  top:90px;
+  right:40px;
+}
+.customButton{
+background-color:#FFFFFF; 
+border-radius: 6px;
+border-color: #9B9B9B;
+border-style: solid;
+width:60px;
+height:30px;
+outline:none;
+}
+.customButton:active{
+
+border-radius: 6px;
+border-color: #FD23FA;
+
+}
+#Tag{
+
+text-align: center;
+
+}
+.strip{
+border:1px solid rgba(51,51,102,1);
+border-radius: 8px;
+background-color: rgba(51,51,102,1);
+text-align: center;
+color: white;
+
+}
+.infoArea{
+
+background-color: #FBFBEF;
+height:380px;
+overflow-y: scroll;
+overflow-x:hidden;
+border:1px solid #d9d9f2;
+border-radius: 3px;
+border-top: 1px solid #FBFBEF;
+}
+.bar{
+background-color: rgba(221,72,20,0.9);
+border-radius: 8px;
+}
+.hoverChange:hover{
+
+background-color: rgba(51,51,102,1);
+cursor:pointer;
+border-radius: 8px;
+
+}
+#welcome{
+font-size: 30px;
+color:white;
+padding-left:40%;
+padding-top: 9%;
+}
+#infoText{
+
+color:black;
+font-size: 20px;
+
+padding-left: 45%;
+}
+#alumniMeetText{
+
+font-size: 50px;
+color:rgba(153,51,102,1);
+padding-left:30%;
+padding-top: 2%;
+}
+#moto{
+font-size: 15px;
+color:white;
+padding-left:50%;
+}
+.payLink{
+display: none;
+font-size: 40px;
+
+}
+.pointer{
+  cursor:pointer;
+}
+.optionBox{
+
+width:70%;
+height:200px;
+
+margin:15%;
+margin-top: -10%;
+background-color: white;
+border-radius: 8px;
+
+}
+.optionBar{
+
+  height:50px;
+  background-color: #5CBC7F;
+}
+.margin{
+margin:15%;
+margin-top: 10%;
+text-align: center;
+color:#D3D5D4;
+}
+
+.headText{
+  color:white;
+  text-align: center;
+  padding: 5%;
+}
+.boxTextInside{
+
+  padding:2%;
+  font-size: 1.2em;
+  text-align: center;
+}
+.center{
+  text-align: center;
+  color:#C3C8C5;
+}
+.height{
+
+  
+  margin-top:1%;
+  background-color: #f5f5d6
+}
+
+footer{
+padding:50px;
+}
+.box{
+
+  border:1px solid #C2C2A3;
+  padding:10px;
+  border-radius: 5px;
+  margin:2%;
+  background-color: white;
+  color: black;
+}
+.boxButton{
+
+  width:100%;
+  margin-bottom: 10%;
+  margin-top: 10%;
+  height:20%;
+  background-color:#C4C4C4;
+}
+
+#AlumniMeetText{
+
+font-size: 40px;
+text-align:center;
+
+
+}
+.boxButtonProceed{
+
+  width:100%;
+  margin-bottom: 5%;
+  
+  height:20%;
+  background-color:#C4C4C4;
+}
+
+.travelForm{
+
+  color:#585858;
+  font-size: 12px;
+
+}

@@ -1,0 +1,53 @@
+{% extends "base1.html" %}
+{% comment %}
+  This is the main template for all portal pages.
+{% endcomment %}
+
+{% block head %}
+  <title> {% block title %}{% endblock %}</title>
+{% block style %}
+<style>
+#success{
+margin-top:2%;
+border:1px solid;
+border-radius:6px;
+padding:5%;
+}
+</style>
+{% endblock %}
+{% endblock %}
+{% block body %}
+
+
+{% block content %}
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
+			
+			<div id="success">
+				<div style="text-align:center">Password Recovery</div>				
+				<form class="form-group" action="/portal/pass_change/{{hash}}" method="post">	
+					 {% csrf_token %}
+   			<div id="errors">
+{{error}}
+</div>	
+
+{{ form }}
+
+ <button type="submit" class="btn btn-default pull-right">Proceed</button>	
+
+
+
+   
+		
+				</form>
+
+
+			</div>
+		</div>
+	</div>
+
+</div>
+
+{% endblock %}
+{% endblock %}

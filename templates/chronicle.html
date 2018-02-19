@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+      {% block title %}IIT BHU Alumni Portal {% endblock %}
+         
+   {% block body %}
+   <style type="text/css">
+   	.none_posted_yet {
+    padding: 10px;
+    margin: 5px;
+    border-radius: 4px;
+    border: rgba(0,0,0,0.3) solid 0.3px;
+}
+   </style>
+<div class="container">
+	<div class="text-center"><h2 style="font-weight: bold;">Chronicles</h2></div>
+    	<hr>
+ 		<div class=row>
+			 <div class="col-sm-offset-1 col-sm-4" >
+			 	<h4 style="font-weight: bold;">MSc.Phd. Interviews.</h4>
+			 </div>
+			 <div class="col-sm-7 text-center">
+							 {% if chronicles %}
+							 <ul class="text-center" style="border-left: 1px solid black;">
+							                {% for chronicle in chronicles %}
+							                <li>{{ forloop.counter }}
+							                <p class="int_content">{{ chronicle.content }}<a href="{{chronicle.pdf.url}}" style="cursor:pointer;">Download Now</a></p>
+							                </li>
+							                <hr>.
+							                {% endfor %}
+							</ul>
+							{% else %}
+							<div class="none_posted_yet">
+								<div class="text-center">No Content To Display</div>
+							</div>
+							{% endif %}
+			 </div>
+ 		</div>
+</div>
+
+	
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/readmore.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+$(".int_content").readmore();
+});
+</script>
+<script type="text/javascript">
+// 	jQuery(document).ready(function($) {
+//     $(".clickable-row").click(function() {
+//         window.document.location = $(this).data("href");
+//     });
+// });
+</script>
+{% endblock %}

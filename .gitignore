@@ -1,0 +1,27 @@
+# Created by https://www.gitignore.io/api/django
+
+### Django ###
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+.installed.cfg
+bin
+develop-eggs
+dist
+downloads
+eggs
+parts
+src/*.egg-info
+lib
+lib64
+portal/migrations/*
+static/defaultImage/*
+*.csv
+.vscode
+failed.txt
+secret.txt
+sendMail.txt
+db.sqlite3
+saic/settings.py*

@@ -1,0 +1,260 @@
+
+{% extends "base2.html" %}
+
+ 
+          {% block title %} IIT BHU Alumni Portal {% endblock %}
+         
+
+     {% block body %} 
+<!------------------------------------------------------------Navigation Bar Ends--------------------------------------------------------------->
+<!----------------------------------------------Profile Page Starts------------------------------------------------------------------------>
+<div class="container" style="padding-top: 60px;">
+  <div class="row  " style="min-height: 900px;">
+  		<!--Left Column-->
+  	  
+         <!---Right Column-->
+      <div class="col-sm-12 col-xs-12 col-md-8  col-md-offset-2 shadow-done roundcornerbig">
+      	<h3 class="text-center">Alumni Student  Mentorship Form</h3>
+              <p> The Alumni Student mentorship programme (ASMP) will offer every student an opportunity to build up relationships with alumni and allow him or her to explore the information and advice related to academics and professional development.
+              This will be a platform for one to one interaction where students will be alloted mentors according to their career interests.Register as a mentee to build you network and your opportunities.
+              <p class="item-pad col-xs-12" style="color:red"><span class="glyphicon glyphicon-star-empty "></span>If you have already submitted a response and wish to edit it, then refill this form and click submit</p>
+              </p>
+              
+              
+              {% if category == 'alumni' %}
+              <form class="form-horizontal" id="mentor_form" action="/portal/mentor_response/"  role="form" data-toggle="validator" method="post">
+                                 {% csrf_token %}
+                                 <div style="color:red">
+                                  {{errors}}
+                                  {{areas}}
+                                     </div>
+                                    <div class="form-group">
+                                        <label for="mentor_area" class="col-sm-3 col-xs-12  col-md-3 control-label">Areas you can mentor</label>
+                                        <div class="col-sm-6 col-xs-12 col-md-6">
+                                        <div class="checkbox">
+                                            <label><input type="checkbox" class=" roundcorner" id="areas_mentor" name="areas_mentor" value="Job (Non Core)">Job (Non Core)</label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label><input type="checkbox" class=" roundcorner" id="areas_mentor" name="areas_mentor" value="Civil services">Civil services</label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label><input type="checkbox" class=" roundcorner" id="areas_mentor" name="areas_mentor" value="MBA">MBA</label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label><input type="checkbox" class=" roundcorner" id="areas_mentor" name="areas_mentor" value="Jobs (Core)">Jobs (Core)</label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label><input type="checkbox" class=" roundcorner" id="areas_mentor" name="areas_mentor" value="Entrepreneurial Initiatives">Entrepreneurial Initiatives</label>
+                                          </div>
+                                        <div class="checkbox">
+                                            <label><input type="checkbox" class="others_box roundcorner" id="areas_mentor" name="areas_mentor" value="others">Others (Please Specify)</label>
+                                        </div>
+                                            <div class="col-xs-6 input-group">
+                                            <input type="text"  id="areas_mentor" class="form-control roundcorner" name="areas_mentor" maxlength="200" data-error="Must be 200 Characters or Less" placeholder="Please Specify...." required/>
+                                            </div>
+                                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                      </div>
+                                      <div class="help-block with-errors col-sm-12 col-xs-12 col-sm-offset-3"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Content" class="col-sm-3 col-xs-12 col-md-3 control-label">Max. No. of Students You can Mentor</label>
+                                        <div class="col-sm-6 col-xs-12 col-md-6 input-group">
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
+                                            <input type="number" class="form-control roundcorner" name="mentor_max" id="mentor_max" placeholder="Tell Us!" max=1000 min="1" data-error="Must be 1000 or Less" required/>
+                                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                      </div>
+                                      <div class="help-block with-errors col-sm-offset-3 col-xs-12"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-9 col-sm-offset-3 col-xs-12">
+                                            <input type="submit" onclick="if(!this.form.checkbox.checked){alert('You must select atleast one areas of Interest');return false}" name="alumni_mentor_form" class="btn btn-primary roundcorner"/>
+                                        </div>
+                                    </div>
+                            </form>
+                            {% endif %}
+                          {% if category == 'student' %}
+                            <form class="form-horizontal" id="mentor_form" action="/portal/mentor_response/"  role="form" data-toggle="validator" method="post">
+                                 {% csrf_token %}
+                                  <div class="form-group">
+                                    <label for="careerInterest" class="col-xs-12 col-sm-3 control-label">Preference 1:  </label>
+                                        <div class="col-xs-12 col-sm-6 input-group">
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-education" aria-hidden="true"></span></span>
+                                            <select name="career_interest_pref_1" id="career_interest_pref_1" class="form-control roundcorner">
+                                                
+                                                <option >Higher studies in Core subject</option>
+                                                <option >Job (Non Core)</option>
+                                                <option >Civil services</option>
+                                                <option >MBA</option>
+                                                <option >Jobs (Core)</option>
+                                                <option >Entrepreneurial Initiatives</option>
+                                                <option>Energy Management</option>
+                                                <option >GATE&IES</option>
+                                                <option >GRE</option>
+                                                <option >Industry Expectations</option>
+                                                <option >Internships</option>
+                                                <option >Pharma Industry</option>
+                                                <option >Power System Operation</option>
+                                                <option >Public Policy and Consulting</option>
+                                                <option >Research</option>
+                                                <option >Research in Chemical Engineering</option>
+                                                <option >Research in Mining and Allied Industries</option>
+                                                <option >Sales Marketing and Buisiness Development</option>
+                                                <option >Startup</option>
+                                            </select>
+                                            <div class="col-xs-6 input-group">
+                                            <input type="text"  id="career_interest_other_pref_1" class="form-control roundcorner others1" name="career_interest_other_pref_1" maxlength="200" data-error="Must be 100 Characters or Less" placeholder="Please Specify...." style='display:none;'/>
+                                            </div>
+                                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                        </div>
+                                    <div class="help-block with-errors col-sm-offset-4"></div>
+                                </div> 
+
+                                <div class="form-group">
+                                    <label for="careerInterest" class="col-xs-12 col-sm-3 control-label">Preference 2: </label>
+                                        <div class="col-xs-12 col-sm-6 input-group">
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-education" aria-hidden="true"></span></span>
+                                            <select name="career_interest_pref_2" id="career_interest_pref_2" class="form-control roundcorner">
+                                                
+                                                <option >Higher studies in Core subject</option>
+                                                <option >Job (Non Core)</option>
+                                                <option >Civil services</option>
+                                                <option >MBA</option>
+                                                <option >Jobs (Core)</option>
+                                                <option >Entrepreneurial Initiatives</option>
+                                                <option>Energy Management</option>
+                                                <option >GATE & IES</option>
+                                                <option >GRE</option>
+                                                <option >Industry Expectations</option>
+                                                <option >Internships</option>
+                                                <option >Pharma Industry</option>
+                                                <option >Power System Operations</option>
+                                                <option >Public Policy and Consulting</option>
+                                                <option >Research</option>
+                                                <option >Research in Chemical Engineering</option>
+                                                <option >Research in Mining and Allied Industries</option>
+                                                <option >Sales Marketing and Buisiness Development</option>
+                                                <option >Startup</option>
+                                            </select>
+                                            <div class="col-xs-6 input-group">
+                                            <input type="text"  id="career_interest_other_pref_2" class="form-control roundcorner others2" name="career_interest_other_pref_2" maxlength="200" data-error="Must be 100 Characters or Less" placeholder="Please Specify...." style='display:none;'/>
+                                            </div>
+                                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                        </div>
+                                    <div class="help-block with-errors col-sm-offset-4"></div>
+                                </div> 
+
+                                <div class="form-group">
+                                                    <label for="guidance_type" class="col-xs-12 col-sm-3 control-label">What sort of guidance/support do you seek from the Alumni Community?</label>
+                                                    <div class="col-sm-6 col-xs-12 col-md-6 input-group">
+                                                      <span class="input-group-addon"><span class="glyphicon glyphicon-text-width" aria-hidden="true"></span></span>
+                                                        <input type="text" class="form-control roundcorner" id="guidance_type" name="guidance_type" placeholder="Please Specify" maxlength="600" data-error="Must be 600 Characters or Less"  required/>
+                                                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                                  </div>
+                                                <div class="help-block with-errors col-xs-12 col-sm-offset-3"></div>
+                                  </div>
+                                  <div class="form-group">
+                                                        <div class="col-sm-9 col-sm-offset-3 col-xs-12">
+                                                            <input type="submit" name="student_mentor_form" class="btn btn-primary roundcorner"/>
+                                                        </div>
+                                  </div>
+                            </form>
+                          {% endif %}
+      </div>
+  
+
+	<div class="modal fade" style="display:none;top:15%" id="success_mail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"  aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 style="color:green" class="modal-title" id="myModalLabel">Success</h4>
+      </div>
+  
+       
+  <div class="modal-body" >
+       
+  <p>We have recieved your response.  We will revert back to you shortly</p>
+    
+      </div>
+      <div class="modal-footer">
+        
+      </div>
+
+    </div>
+  </div>
+</div>
+
+	<div class="modal fade" style="display:none;top:15%" id="send_fail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"  aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 style="color:green" class="modal-title" id="myModalLabel">Failed</h4>
+      </div>
+  
+       
+  <div class="modal-body" >
+       
+  <p>Oops,Looks like there is some kind of error in connection. Please retry sending the mail.</p>
+    
+      </div>
+      <div class="modal-footer">
+        
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+{% if success_mail == "success" %}
+<script>
+  $("#success_mail").modal("show");
+</script>
+{% endif %}
+<script>
+  $('#career_interest_pref_1').on('change', function() {
+    if($(this).val() == 'Others')
+    {
+      $("#career_interest_other_pref_1").show();
+    }
+    else{
+
+      $("#career_interest_other_pref_1").hide();
+    }
+
+ });
+
+  $('#career_interest_pref_2').on('change', function() {
+    if($(this).val() == 'Others')
+    {
+      $("#career_interest_other_pref_2").show();
+    }
+    else{
+
+      $("#career_interest_other_pref_2").hide();
+    }
+
+});
+
+</script>
+<script>
+        $(document).ready(function(){
+                $("forumnav").removeClass('active');
+                $("#settingnav").removeClass('active');
+                $("#searchnav").removeClass('active');
+                $("#forumnav").removeClass('active');
+                $("#dropdownnav").removeClass('active');
+                $("#initiativenav").addClass('active');
+                $("#guesthousenav").removeClass('active');
+                $("#notificationnav").removeClass('active');
+        });
+        
+</script>
+<script>
+
+
+</script>
+
+    {% endblock %} 

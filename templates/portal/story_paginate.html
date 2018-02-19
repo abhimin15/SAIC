@@ -1,0 +1,100 @@
+{% load tempstory %} {% load timesince %} {% load el_pagination_tags %} {% paginate 8 story_data %}
+<!--Show Pagination Starts-->{% get_pages %}
+<ul class="pagination">{% if pages.paginated %}
+  <li class="page-item">
+    <a class="page-link" href="{{ pages.first.path }}" aria-label="First"> <span aria-hidden="true">&lt;&lt; First</span>
+      <span class="sr-only">First</span>
+    </a>
+  </li>
+  <li class="page-item">
+    <a class="page-link" href="{{ pages.previous.path }}" aria-label="Previous"> <span aria-hidden="true">&lt;Previous</span>
+      <span class="sr-only">Previous</span>
+    </a>
+  </li>{% for page in pages %} {% if page == None %}
+  <li class="page-item disabled">
+    <a class="page-link" href="#" aria-label="..."> <span aria-hidden="true">...</span>
+      <span class="sr-only">...</span>
+    </a>
+  </li>{% else %} {% if page.is_current %}
+  <li class="page-item {% if page.is_current %} active {% endif %}">
+    <a class="page-link" href="{{ page.path }}" aria-label="Page {{page.number}}"> <span aria-hidden="true">{{ page.label|safe }}</span>
+      <span class="sr-only">Page {{page.number}}</span>
+    </a>
+  </li>{% endif %} {% endif %} {% endfor %}
+  <li class="page-item">
+    <a class="page-link" aria-label="Next"> <span aria-hidden="true">to</span>
+      <span class="sr-only">to</span>
+    </a>
+  </li>
+  <li class="page-item">
+    <a class="page-link" href="{{ pages.last.path }}" aria-label="Next"> <span aria-hidden="true">{{pages.last.number}}</span>
+      <span class="sr-only">Next</span>
+    </a>
+  </li>
+  <li class="page-item">
+    <a class="page-link" href="{{ pages.next.path }}" aria-label="Next"> <span aria-hidden="true">&gt;Next</span>
+      <span class="sr-only">Next</span>
+    </a>
+  </li>
+  <li class="page-item">
+    <a class="page-link" href="{{ pages.last.path }}" aria-label="Last"> <span aria-hidden="true">&gt;&gt; Last</span>
+      <span class="sr-only">Last</span>
+    </a>
+  </li>{% endif %}</ul>
+<!--Show Pagination Ends-->{% for storypick in story_data %}
+<div class="row row-news wrap roundcorner">
+  <div class="container">{% do_story storypick %}
+    <h3 class="header">{{storypick.heading_story}}<small><span class="label label-default">{{storypick.category|title}}</span></small></h3><span class="glyphicon glyphicon-time"></span><small> {{storypick.date_story | age }}</small>
+    <hr>
+    <div>
+      <p class="storiescontent content">{{storypick.content_story}}</p>
+    </div>
+  </div>
+  <div class="postedby_footer text-right">
+    <a href={% url 'user_detail' storypick.author_id storypick.category %}>
+      <img src="{{story_user.photo.url}}" class="img-circle" alt="Cinque Terre" width="25" height="25">{{story_user.firstName|title}} {{story_user.lastName|title}}</a>
+  </div>
+</div>{% endfor %}
+<!--Show Pagination Starts-->{% get_pages %}
+<ul class="pagination">{% if pages.paginated %}
+  <li class="page-item">
+    <a class="page-link" href="{{ pages.first.path }}" aria-label="First"> <span aria-hidden="true">&lt;&lt; First</span>
+      <span class="sr-only">First</span>
+    </a>
+  </li>
+  <li class="page-item">
+    <a class="page-link" href="{{ pages.previous.path }}" aria-label="Previous"> <span aria-hidden="true">&lt;Previous</span>
+      <span class="sr-only">Previous</span>
+    </a>
+  </li>{% for page in pages %} {% if page == None %}
+  <li class="page-item disabled">
+    <a class="page-link" href="#" aria-label="..."> <span aria-hidden="true">...</span>
+      <span class="sr-only">...</span>
+    </a>
+  </li>{% else %} {% if page.is_current %}
+  <li class="page-item {% if page.is_current %} active {% endif %}">
+    <a class="page-link" href="{{ page.path }}" aria-label="Page {{page.number}}"> <span aria-hidden="true">{{ page.label|safe }}</span>
+      <span class="sr-only">Page {{page.number}}</span>
+    </a>
+  </li>{% endif %} {% endif %} {% endfor %}
+  <li class="page-item">
+    <a class="page-link" aria-label="Next"> <span aria-hidden="true">to</span>
+      <span class="sr-only">to</span>
+    </a>
+  </li>
+  <li class="page-item">
+    <a class="page-link" href="{{ pages.last.path }}" aria-label="Next"> <span aria-hidden="true">{{pages.last.number}}</span>
+      <span class="sr-only">Next</span>
+    </a>
+  </li>
+  <li class="page-item">
+    <a class="page-link" href="{{ pages.next.path }}" aria-label="Next"> <span aria-hidden="true">&gt;Next</span>
+      <span class="sr-only">Next</span>
+    </a>
+  </li>
+  <li class="page-item">
+    <a class="page-link" href="{{ pages.last.path }}" aria-label="Last"> <span aria-hidden="true">&gt;&gt; Last</span>
+      <span class="sr-only">Last</span>
+    </a>
+  </li>{% endif %}</ul>
+<!--Show Pagination Ends-->

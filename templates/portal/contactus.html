@@ -1,0 +1,81 @@
+{% extends "base2.html" %} {% block title %} IIT BHU Alumni Portal {% endblock %} {% block body %}
+<!------------------------------------------------------------Navigation Bar Ends--------------------------------------------------------------->
+<!----------------------------------------------Profile Page Starts------------------------------------------------------------------------>
+<div class="container" style="padding-top:60px">
+  <div class="row" style="min-height:708px">
+    <!--Left Column-->
+    <div class="col-sm-12 col-xs-12 col-md-4">
+      <div class="panel panel-success shadow-done roundcornerbig">
+        <div class="panel-heading">
+          <h3 class="panel-title text-center">Call us!</h3>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <h5 class="item-pad col-xs-12"><i class="fa fa-phone-square"></i> Shivam Banka (IDD 4Th Year): +919838250520</h5>
+            <h5 class="item-pad col-xs-12"><i class="fa fa-phone-square"></i> Tanay Sharma (IDD 5th Year): +919956919622</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!---Right Column-->
+    <div class="col-sm-12 col-xs-12 col-md-8 shadow-done roundcornerbig">
+      <h3 class="text-center">Contact Us</h3>
+      <p>Welcome, User. For any sort of suggestions on improving or website,reporting a bug or any such assistance ,feel free to contact us. You can call us or mail us the concerned query and we will respond to you as early as possible.Thankyou,</p>
+      <br>
+      <h4 style="text-align:center">Contact Form</h4>
+      <form class="form-horizontal" id="contact_form" action="/portal/contactus/" role="form" data-toggle="validator" method="post">{% csrf_token %}
+        <div class="form-group">
+          <label for="subject" class="col-sm-3 col-xs-12 control-label">Subject</label>
+          <div class="col-sm-8 col-xs-12 input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-text-width" aria-hidden="true"></span></span>
+            <input type="text" class="form-control roundcorner" id="subject_contact" name="subject_contact" placeholder="Enter Subject Here.." maxlength="200" data-error="Must be 200 Characters or Less" required> <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+          </div>
+          <div class="help-block with-errors col-sm-offset-4 col-xs-12"></div>
+        </div>
+        <div class="form-group">
+          <label for="Content" class="col-sm-3 col-xs-12 control-label">Message</label>
+          <div class="col-sm-8 col-xs-12 input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></span>
+            <textarea type="text" class="form-control roundcorner" name="message_contact" id="message_contact" rows="5" placeholder="Tell Us!" maxlength="8000" data-error="Must be 1000 words or Less" required></textarea><span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+          </div>
+          <div class="help-block with-errors col-sm-offset-4 col-xs-12"></div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-9 col-sm-offset-3 col-xs-12">
+            <input type="submit" name="contact_form" class="btn btn-primary roundcorner">
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal fade" style="display:none;top:15%" id="success_mail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span>
+            </button>
+            <h4 style="color:green" class="modal-title" id="myModalLabel">Success</h4>
+          </div>
+          <div class="modal-body">
+            <p>We have recieved your query. We will revert back to you shortly</p>
+          </div>
+          <div class="modal-footer"></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" style="display:none;top:15%" id="send_fail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span>
+            </button>
+            <h4 style="color:green" class="modal-title" id="myModalLabel">Failed</h4>
+          </div>
+          <div class="modal-body">
+            <p>Oops,Looks like there is some kind of error in connection. Please retry sending the mail.</p>
+          </div>
+          <div class="modal-footer"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>function successPopUp(){var s="{{success_mail}}";s.match("1")&&$("#success_mail").modal("show")}window.onload=successPopUp</script>
+<script>$(document).ready(function(){$("#forumnav").removeClass("active"),$("#settingnav").removeClass("active"),$("#searchnav").removeClass("active"),$("#forumnav").removeClass("active"),$("#dropdownnav").removeClass("active"),$("#initiativenav").removeClass("active"),$("#guesthousenav").removeClass("active"),$("#notificationnav").removeClass("active"),$("#contactusnav").addClass("active")})</script>{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "base1.html" %} {% comment %} This is the main template for all portal pages. {% endcomment %} {% block head %} <title> {% block title %}{% endblock %}</title>
+{% block style %}
+<style>.success{margin-top:2%;border:2px solid;border-radius:6px;padding:5%;background-color:#FFF}.box{border:1px solid #C2C2A3;padding:10px;border-radius:5px;margin-bottom:2%;margin-top:2%}#proceed{margin-top:2%}</style>
+{% endblock %} {% endblock %} {% block body %} {% block content %}
+<div class="background">
+<div class="container-fluid container">
+<div class="row">
+<div class="col-md-6 col-md-offset-3">
+<div class="success">
+<img class="img img-responsive" src="/static/images/IITBHULogo1.png" style="margin-left:42%;margin-top:-4%" height="70" width="70">
+<h3 class="text-center">What is your Category?</h3>
+<h5 class="text-center">Note:Select your category appropriately</h5>
+<form action="/portal/verify/{{hash}}/?backend={{ backend }}" method="post">
+{% csrf_token %}
+<div id="errors" style="color:red">
+{{error}}
+</div>
+<div class="row" style="background-color:#FFF">
+<div class="col-xs-12 col-sm-4">
+<div class="panel panel-success">
+<div class="panel-heading">
+<h3 class="panel-title text-center">Student</h3>
+</div>
+<div class="panel-body" id="modalchanger1">
+<a href="/portal/verify_student/{{hash}}/?backend={{ backend }}">
+<img class="img img-responsive" src="/static/img/student.png" style="width:100%;height:100%">
+</a>
+</div>
+</div>
+</div>
+<div class="col-xs-12 col-sm-4">
+<div class="panel panel-success">
+<div class="panel-heading">
+<h3 class="panel-title text-center">Alumni</h3>
+</div>
+<div class="panel-body" id="modalchanger2">
+<a href="/portal/verify_alumni/{{hash}}/?backend={{ backend }}">
+<img class="img img-responsive" src="/static/img/alumni.png" style="width:100%;height:100%">
+</a>
+</div>
+</div>
+</div>
+<div class="col-xs-12 col-sm-4">
+<div class="panel panel-success">
+<div class="panel-heading">
+<h3 class="panel-title text-center">Faculty</h3>
+</div>
+<div class="panel-body" id="modalchanger3">
+<a href="/portal/verify_faculty/{{hash}}/?backend={{ backend }}">
+<img class="img img-responsive" src="/static/img/faculty.png" style="width:100%;height:100%">
+</a>
+</div>
+</div>
+</div>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+{% endblock %} {% endblock %}

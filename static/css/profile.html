@@ -1,0 +1,550 @@
+{% extends "base2.html" %} {% block title %} IIT BHU Alumni Portal {% endblock %} {% block body %}
+<script src="/static/js/ajax_upload.js"></script>
+
+<script>
+  function upload_open(){$("#uploadModal").modal("show")}function deletePhoto(){$.get("/portal/deletePhoto/",{},function(o){o.match("success")?window.location="http://"+window.location.host+"/portal/profile/":$("#message").html(o)})}
+</script>{% load tempstory %} {% load timesince %} {% load el_pagination_tags %}
+<!------------------------------------------------------------Navigation Bar Ends--------------------------------------------------------------->
+<!----------------------------------------------Profile Page Starts------------------------------------------------------------------------>
+<div class="container" style="padding-top: 60px;">{% if delete_success %}
+  <div class="alert alert-success"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Interest</strong> Deleted Successfully</div>{% endif %} {% if profile_edit_success %}
+  <div class="alert alert-success"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Profile</strong> Updated Successfully</div>{% endif %}
+  <div class="row  " style="min-height:1400px;">
+    <!-- left column -->
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <div class="panel panel-success shadow-done roundcornerbig">
+        <div class="panel-body">
+          <div class="text-center">
+            <img src="{{profile_data.photo.url}}" id="photo_placeholder" class="avatar img-circle img-thumbnail img-responsive" style="height:200px;width:200px;" alt="avatar">
+            <br>
+            <br>
+            <input class="update roundcorner btn btn-success" type="button" value="Update" onclick="upload_open()" style="border-radius: 6px;">
+            <input class="delete roundcorner btn btn-danger" type="button" value="Delete" onclick="deletePhoto()" style="border-radius: 6px;">
+            <h3>{{profile_data.firstName}} {{profile_data.lastName}}</h3>
+            {% if category == 'alumni' or category == 'student' %}
+            <h3>{{category |title}}</h3>
+            <h3>Batch of {{profile_data.year}}</h3>
+            {% elif category == 'faculty' %}
+            <h3>{{profile_data.designation}} at IIT B.H.U</h3>
+            {% endif %}
+            <h3>IIT BHU(Varanasi)</h3>
+          </div>
+        </div>
+        <div class="panel-footer text-center"><a href="#"><h4 id="editprofile"><span class="glyphicon glyphicon-pencil"></span> Edit Profile</h4></a>
+        </div>
+      </div>
+    </div>
+    <!---Right Column-->
+    <div class="col-md-8 col-sm-6 col-xs-12 shadow-done roundcornerbig">
+      <ul class="nav nav-pills nav-justified">
+        <li id="FeedCheck" class="active"><a data-toggle="tab" href="#feed"> My Feed</a>
+        </li>
+        <li id="ProfileCheck"><a data-toggle="tab" href="#profile">Profile</a>
+        </li>
+        <li id="InterestCheck"><a data-toggle="tab" href="#interest">Interests</a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <div id="feed" class="tab-pane fade in active">
+          <div class="container">{% if story_data %}
+            <div class="col-xs-12">
+              <div class="endless_page_template" id="story_data">{% include 'portal/profile_story_paginate.html' %}</div>
+            </div>{% else %}
+            <div class="notifications-wrapper">
+              <a class="content" href="#">
+                <div class="notification-item">
+                  <h4 class="item-title">No Story posted yet</h4>
+                </div>
+              </a>
+            </div>{% endif %}</div>
+        </div>
+        <div id="profile" class="tab-pane fade">
+          <div class="zero-margin-left" id="profilecontent">
+            <!-----------------------PErsonal Section Starts---------------->
+            <div class="panel panel-info">
+              <div class="panel-heading">
+                <h3 class="panel-title">Personal</h3>
+              </div>
+              <div class="panel-body">
+                <div class="row">
+                  <h5 class="item-pad col-sm-12 col-md-5 col-lg-5">First Name: {{profile_data.firstName}}</h5>
+                  <h5 class="item-pad col-sm-12 col-md-5 col-lg-5">Last Name: {{profile_data.lastName}}</h5>
+                  <h5 class="item-pad col-sm-12 col-md-5 col-lg-5">Gender: {{profile_data.gender}}</h5>
+                  <h5 class="item-pad col-sm-12 col-md-5 col-lg-5">Birthday: {{profile_data.dob}}</h5>
+                </div>
+              </div>
+            </div>
+            <!-------------College Section Starts-------------->{% if category == 'alumni' or category == 'student' %}
+            <div class="panel panel-info">
+              <div class="panel-heading">
+                <h3 class="panel-title">College</h3>
+              </div>
+              <div class="panel-body">
+                <div class="row">
+                  <h5 class="item-pad col-sm-12 col-md-5 col-lg-5">Roll No:{{profile_data.roll}}</h5>
+                  <h5 class="item-pad col-sm-12 col-md-5 col-lg-5">Batch:{{profile_data.year}}</h5>
+                </div>
+                <div class="row">
+                  <h5 class="item-pad col-sm-12 col-md-5 col-lg-5">Branch: {{profile_data.branch}}</h5>
+                  <h5 class="item-pad col-sm-12 col-md-5 col-lg-5">Course: {{profile_data.course}}</h5>
+                </div>
+              </div>
+            </div>{% endif %} {% if category == 'alumni' or category == 'faculty'%}
+            <!-----------------------COmpany Section Starts---------------->
+            <div class="panel panel-info">
+              <div class="panel-heading">{% if category == 'alumni' %}
+                <h3 class="panel-title">Company</h3>
+                {% elif category == 'faculty' %}
+                <h3 class="panel-title">IIT B.H.U</h3>
+                {% endif %}</div>
+              <div class="panel-body">
+                <div class="row">{% if category == 'alumni' %}
+                  <h5 class="item-pad col-sm-12 col-md-12 col-lg-12">Current: {{profile_data.organisation}}</h5>
+                  {% endif %} {% if category == 'faculty' %}
+                  <h5 class="item-pad col-sm-12 col-md-12 col-lg-12">Current: IIT B.H.U</h5>
+                  <h5 class="item-pad col-sm-12 col-md-5 col-lg-5">Joining Year:{{profile_data.year}}</h5>
+                  <h5 class="item-pad col-sm-12 col-md-5 col-lg-5">Dept.: {{profile_data.branch}}</h5>
+                  {% endif %} {% if category == 'alumni' or category == 'faculty' %}
+                  <h5 class="item-pad col-sm-12 col-md-12 col-lg-12">Designation: {{profile_data.designation}}</h5>
+                  {% endif %}</div>
+              </div>
+            </div>{% endif %}
+            <!-----------------------Contact Section Starts---------------->
+            <div class="panel panel-info">
+              <div class="panel-heading">
+                <h3 class="panel-title">Contact</h3>
+              </div>
+              <div class="panel-body">
+                <div class="row">
+                  <h5 class="item-pad col-sm-12 col-md-12 col-lg-12">
+                                             {% if profile_data.privacy_Email == 'Everyone' %}
+                                             <span class='glyphicon glyphicon-globe'></span>
+                                             Email:  {{profile_data.email}}
+                                             {% else %}
+                                             <span class='glyphicon glyphicon-lock'></span>
+                                             Email:  {{profile_data.email}}
+                                             {% endif %}
+                                             <br>
+                                             </h5>
+                  <br>
+                  <h5 class="item-pad address_correct col-sm-12 col-md-12 col-lg-12">
+                                             {% if profile_data.privacy_CAddress == 'Everyone' %}
+                                             <span class='glyphicon glyphicon-globe'></span>
+                                             Current Address:{{profile_data.address_present}},<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{profile_data.city_present}},<br>&ensp;&nbsp;&nbsp;&nbsp;&nbsp;{{profile_data.state_present}},<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pin:{{profile_data.zip_present}},<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{profile_data.country_present}}
+                                             {% else %}
+                                             <span class='glyphicon glyphicon-lock'></span>
+                                             Current Address:{{profile_data.address_present}},<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{profile_data.city_present}},<br>&ensp;&nbsp;&nbsp;&nbsp;&nbsp;{{profile_data.state_present}},<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pin:{{profile_data.zip_present}},<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{profile_data.country_present}}
+                                             {% endif %}
+                                             <br>
+                                             </h5>
+                  <br>
+                  <h5 class="item-pad address_correct col-sm-12 col-md-12 col-lg-12">
+                                             {% if profile_data.privacy_PAddress == 'Everyone' %}
+                                             <span class='glyphicon glyphicon-globe'></span>
+                                             Permanent Address:{{profile_data.address_permanent}},<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{profile_data.city_permanent}},<br>&ensp;&nbsp;&nbsp;&nbsp;&nbsp;{{profile_data.state_permanent}},<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pin:{{profile_data.zip_permanent}},<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{profile_data.country_permanent}}
+                                             {% else %}
+                                             <span class='glyphicon glyphicon-lock'></span>
+                                             Permanent Address:{{profile_data.address_permanent}},<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{profile_data.city_permanent}},<br>&ensp;&nbsp;&nbsp;&nbsp;&nbsp;{{profile_data.state_permanent}},<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pin:{{profile_data.zip_permanent}},<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{profile_data.country_permanent}}
+                                             {% endif %}
+                                             
+                                             </h5>
+                  <br>
+                  <h5 class="item-pad col-sm-12 col-md-12 col-lg-12">
+                                             {% if profile_data.privacy_Mobile == 'Everyone' %}
+                                             <span class='glyphicon glyphicon-globe'></span>
+                                             Mobile:{{profile_data.mobile}}
+                                             {% else %}
+                                             <span class='glyphicon glyphicon-lock'></span>
+                                             Mobile:{{profile_data.mobile}}
+                                             {% endif %}
+                                             
+                                             </h5>
+                  <br>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-----------------Edit profile Section-->
+          <div class="zero-margin-left" id="profilecontentedit" style="display:none;">
+            <!-----------------------PErsonal Section Starts---------------->
+            <form class="form-horizontal" action="/portal/editprofile/" role="form" data-toggle="validator" method="post">{% csrf_token %}
+              <div class="panel panel-info">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Personal</h3>
+                </div>
+                <div class="panel-body">
+                  <div class="form-group">
+                    <label for="inputFirstname" class="col-sm-3 control-label">First Name:</label>
+                    <div class="col-sm-6 input-group">
+                      <input type="text" class="form-control roundcorner" name="profilefirstName" value="{{profile_data.firstName}}" data-error="Invalid Name" required> <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                    <div class="help-block with-errors col-sm-offset-4"></div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputlastName" class="col-sm-3 control-label">Last Name:</label>
+                    <div class="col-sm-6 input-group">
+                      <input type="text" class="form-control roundcorner" name="profilelastName" value="{{profile_data.lastName}}" data-error="Invalid Name" required> <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                    <div class="help-block with-errors col-sm-offset-4"></div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputGender" class="col-sm-3 control-label">Gender:</label>
+                    <div class="col-sm-6 input-group">
+                      <select name="profileGender" value="{{profile_data.gender}}" class="form-control roundcorner" required>
+                        <option value="{{profile_data.gender}}" selected="selected">{{profile_data.gender}}</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                      </select> <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                    <div class="help-block with-errors col-sm-offset-4"></div>
+                  </div>
+                </div>
+              </div>
+              <!-------------College Section Starts-------------->{% if category == 'alumni' or category == 'student' %}
+              <div class="panel panel-info">
+                <div class="panel-heading">
+                  <h3 class="panel-title">College</h3>
+                </div>
+                <div class="panel-body">
+                  <div class="form-group">
+                    <label for="inputRoll" class="col-sm-3 control-label">Roll:</label>
+                    <div class="col-sm-6 input-group">
+                      <input type="text" name="profileRoll" class="form-control roundcorner" value="{{profile_data.roll}}"> <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputBirthday" class="col-sm-3 control-label">Batch:</label>
+                    <div class="col-sm-6 input-group">
+                      <input type="number" name="profileBatch" class="form-control roundcorner" max="2020" min="1920" value="{{profile_data.year}}" data-error="Invalid Field" required> <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                    <div class="help-block with-errors col-sm-offset-4"></div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputBranch" class="col-sm-3 control-label">Branch:</label>
+                    <div class="col-sm-6 input-group">
+                      <select name="profileBranch" value="{{profile_data.branch}}" class="form-control roundcorner" required>
+                        <option value="{{profile_data.branch}}" selected="selected">{{profile_data.branch}}</option>
+                        <option>BC: School of Biochemical Engineering</option>
+                        <option>BM: School of Biomedical Engineering</option>
+                        <option>CE: Department of Civil Engineering</option>
+                        <option>CH: Department of Chemical Engineering & Technology</option>
+                        <option>CR: Department of Ceramic Engineering</option>
+                        <option>CS: Department of Computer Science & Engineering</option>
+                        <option>CY: Department of Chemistry (Applied Chemistry)</option>
+                        <option>EC: Department of Electronics Engineering</option>
+                        <option>EE: Department of Electrical Engineering</option>
+                        <option>MA: Department of Mathematical Sciences (Applied Maths)</option>
+                        <option>ME: Department of Mechanical Engineering</option>
+                        <option>MN: Department of Mining Engineering</option>
+                        <option>MS: School of Material Science & Technology</option>
+                        <option>MT: Department of Metallurgical Engineering</option>
+                        <option>PH: Department of Pharmaceutics</option>
+                        <option>PY: Department of Physics (Applied Pysics)</option>
+                        <option>Other</option>
+                      </select> <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                    <div class="help-block with-errors col-sm-offset-4"></div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputCourse" class="col-sm-3 control-label">Course:</label>
+                    <div class="col-sm-6 input-group">
+                      <select name="profileCourse" value="{{profile_data.course}}" class="form-control roundcorner" required>
+                        <option value="{{profile_data.course}}" selected="selected">{{profile_data.course}}</option>
+                        <option>UGD</option>
+                        <option>IDD</option>
+                        <option>IMD</option>
+                        <option>M.Tech./M.Pharm.</option>
+                        <option>Ph.D</option>
+                      </select> <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                    <div class="help-block with-errors col-sm-offset-4"></div>
+                  </div>
+                </div>
+              </div>{% endif %}
+              <!-----------------------COmpany Section Starts---------------->{% if category == 'alumni' or category == 'faculty' %}
+              <div class="panel panel-info">
+                <div class="panel-heading">{% if category == 'alumni' %}
+                  <h3 class="panel-title">Company</h3>
+                  {% elif category == 'faculty' %}
+                  <h3 class="panel-title">IIT B.H.U</h3>
+                  {% endif %}</div>
+                <div class="panel-body">{% if category == 'alumni' %}
+                  <div class="form-group">
+                    <label for="inputCompany" class="col-sm-3 control-label">Current:</label>
+                    <div class="col-sm-6 input-group">
+                      <input type="text" class="form-control roundcorner" name="profileCurrent" value="{{profile_data.organisation}}" data-error="Invalid Field" required> <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                    <div class="help-block with-errors col-sm-offset-4"></div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputDesignation" class="col-sm-3 control-label">Designation:</label>
+                    <div class="col-sm-6 input-group">
+                      <input type="text" class="form-control roundcorner" name="profileDesignation" value="{{profile_data.designation}}" data-error="Invalid Field" required> <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                    <div class="help-block with-errors col-sm-offset-4"></div>
+                  </div>{% endif %} {% if category == 'faculty' %}
+                  <div class="form-group">
+                    <label for="inputBirthday" class="col-sm-3 control-label">Joining Year:</label>
+                    <div class="col-sm-6 input-group">
+                      <input type="number" name="profileBatch" class="form-control roundcorner" max="2016" min="1940" value="{{profile_data.year}}" data-error="Invalid Field" required> <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                    <div class="help-block with-errors col-sm-offset-4"></div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputBranch" class="col-sm-3 control-label">Dept.:</label>
+                    <div class="col-sm-6 input-group">
+                      <select name="profileBranch" value="{{profile_data.branch}}" class="form-control roundcorner" required>
+                        <option value="{{profile_data.branch}}" selected="selected">{{profile_data.branch}}</option>
+                        <option>BC: School of Biochemical Engineering</option>
+                        <option>BM: School of Biomedical Engineering</option>
+                        <option>CE: Department of Civil Engineering</option>
+                        <option>CH: Department of Chemical Engineering & Technology</option>
+                        <option>CR: Department of Ceramic Engineering</option>
+                        <option>CS: Department of Computer Science & Engineering</option>
+                        <option>CY: Department of Chemistry (Applied Chemistry)</option>
+                        <option>EC: Department of Electronics Engineering</option>
+                        <option>EE: Department of Electrical Engineering</option>
+                        <option>MA: Department of Mathematical Sciences (Applied Maths)</option>
+                        <option>ME: Department of Mechanical Engineering</option>
+                        <option>MN: Department of Mining Engineering</option>
+                        <option>MS: School of Material Science & Technology</option>
+                        <option>MT: Department of Metallurgical Engineering</option>
+                        <option>PH: Department of Pharmaceutics</option>
+                        <option>PY: Department of Physics (Applied Pysics)</option>
+                      </select> <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                    <div class="help-block with-errors col-sm-offset-4"></div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputDesignation" class="col-sm-3 control-label">Designation:</label>
+                    <div class="col-sm-6 input-group">
+                      <select name="profileDesignation" value="{{profile_data.designation}}" class="form-control roundcorner" required>
+                        <option value="{{profile_data.designation}}" selected="selected">{{profile_data.designation}}</option>
+                        <option>Professor</option>
+                        <option>Associate Professor</option>
+                        <option>Assistant Professor</option>
+                        <option>Research Professor</option>
+                        <option>Visiting Professor</option>
+                        <option>Retired Professor</option>
+                      </select> <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                    <div class="help-block with-errors col-sm-offset-4"></div>
+                  </div>{% endif %}</div>
+              </div>{% endif %}
+              <!-----------------------Contact Section Starts---------------->
+              <div class="panel panel-info">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Contact</h3>
+                </div>
+                <div class="panel-body">
+                  <!------------------------Current Address Edit------------------------------>
+                  <div class="form-group">
+                    <label for="inputAddress" class="col-sm-3 control-label">Current Address:</label>
+                    <div class="col-sm-6 input-group">
+                      <input type="text" class="form-control roundcorner" name="profileCAddress" value="{{profile_data.address_present}}" data-error="Invalid Field" required> <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                    <div class="help-block with-errors col-sm-offset-4"></div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputCity" class="col-sm-3 control-label">Current City:</label>
+                    <div class="col-sm-6 input-group">
+                      <input type="text" class="form-control roundcorner" name="profileCCity" value="{{profile_data.city_present}}" data-error="Invalid Field" required> <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                    <div class="help-block with-errors col-sm-offset-4"></div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputState" class="col-sm-3 control-label">Current State:</label>
+                    <div class="col-sm-6 input-group">
+                      <input type="text" class="form-control roundcorner" name="profileCState" value="{{profile_data.state_present}}" data-error="Invalid Field" required> <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                    <div class="help-block with-errors col-sm-offset-4"></div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputZip" class="col-sm-3 control-label">Current Zip:</label>
+                    <div class="col-sm-6 input-group">
+                      <input type="text" class="form-control roundcorner" name="profileCZip" value="{{profile_data.zip_present}}" data-error="Invalid Field" required> <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                    <div class="help-block with-errors col-sm-offset-4"></div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputCountry" class="col-sm-3 control-label">Current Country:</label>
+                    <div class="col-sm-6 input-group">
+                      <input type="text" class="form-control roundcorner" name="profileCCountry" value="{{profile_data.country_present}}" data-error="Invalid Field" required> <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                    <div class="help-block with-errors col-sm-offset-4"></div>
+                  </div>
+                  <!----------------------------------Current Address Edit Ends---------------------------------->
+                  <!------------------------------------Permanent Address Edit---------------------------------->
+                  <div class="form-group">
+                    <label for="inputAddress" class="col-sm-3 control-label">Permanent Address:</label>
+                    <div class="col-sm-6 input-group">
+                      <input type="text" class="form-control roundcorner" name="profilePAddress" value="{{profile_data.address_permanent}}" data-error="Invalid Field" required> <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                    <div class="help-block with-errors col-sm-offset-4"></div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputCity" class="col-sm-3 control-label">Permanent City:</label>
+                    <div class="col-sm-6 input-group">
+                      <input type="text" class="form-control roundcorner" name="profilePCity" value="{{profile_data.city_permanent}}" data-error="Invalid Field" required> <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                    <div class="help-block with-errors col-sm-offset-4"></div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputState" class="col-sm-3 control-label">Permanent State:</label>
+                    <div class="col-sm-6 input-group">
+                      <input type="text" class="form-control roundcorner" name="profilePState" value="{{profile_data.state_permanent}}" data-error="Invalid Field" required> <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                    <div class="help-block with-errors col-sm-offset-4"></div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputZip" class="col-sm-3 control-label">Permanent Zip:</label>
+                    <div class="col-sm-6 input-group">
+                      <input type="text" class="form-control roundcorner" name="profilePZip" value="{{profile_data.zip_permanent}}" data-error="Invalid Field" required> <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                    <div class="help-block with-errors col-sm-offset-4"></div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputCountry" class="col-sm-3 control-label">Permanent Country:</label>
+                    <div class="col-sm-6 input-group">
+                      <input type="text" class="form-control roundcorner" name="profilePCountry" value="{{profile_data.country_permanent}}" data-error="Invalid Field" required> <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                    <div class="help-block with-errors col-sm-offset-4"></div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputmobile" class="col-sm-3 control-label">Mobile/Phone:</label>
+                    <div class="col-sm-6 input-group">
+                      <input type="text" class="form-control roundcorner" name="profileMobile" value="{{profile_data.mobile}}" data-error="Invalid Field" required> <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                    <div class="help-block with-errors col-sm-offset-4"></div>
+                  </div>
+                  <!------------------------------------Permanent Address Edit---------------------------------->
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-xs-12 col-sm-offset-2 col-sm-3">
+                  <input type="submit" name="editprofile_form" class="btn btn-warning btn-lg roundcorner" />
+                </div>
+                <div class="col-xs-12 col-sm-offset-2 col-sm-3">
+                  <button type="reset" class="btn btn-danger btn-lg cancel roundcorner" id="profileditcancel">Cancel</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div id="interest" class="tab-pane fade">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-12" style="padding-top:15px;">
+                <form class="form-horizontal" id="story_form" action="/portal/interestprint/" role="form" data-toggle="validator" method="post">{% csrf_token %}
+                  <div class="form-group">
+                    <label for="heading" class="col-sm-3 control-label">Heading</label>
+                    <div class="col-sm-8 input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-text-width" aria-hidden="true"></span></span>
+                      <input type="text" class="form-control roundcorner" id="heading_interest" name="heading_interest" placeholder="Enter Heading" maxlength="200" data-error="Must be 200 Characters or Less" required/> <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                    <div class="help-block with-errors col-sm-offset-4"></div>
+                  </div>
+                  <div class="form-group">
+                    <label for="Content" class="col-sm-3 control-label">Content</label>
+                    <div class="col-sm-8 input-group">
+                      <input type="text" class="form-control roundcorner" name="content_interest" id="content_interest" rows="5" placeholder="Tell Us!" maxlength="600" data-error="Must be 600 Characters or Less" required/> <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                    <div class="help-block with-errors col-sm-offset-4"></div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-sm-9 col-sm-offset-3">
+                      <input type="submit" name="interestpost_form" class="btn btn-primary roundcorner" style="border-radius: 6px;" />
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <hr>
+            <div class="row ">{% for interest in interest_data %}
+              <div class="col-xs-12 roundcorner interestlist">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <h3>{{interest.heading_interest | title }} <small><a href={% url 'delete_interest' interest.id %} title="Delete post"><i class="fa fa-trash-o" style="color:black"></i></a></small></h3>
+                    <small><span class="glyphicon glyphicon-time"></span> {{interest.date_interest | age}}</small>
+                  </div>
+                  <hr>
+                  <br>
+                  <div class="col-xs-12">
+                    <h5 class="storiescontent">{{ interest.content_interest | title }}</h5>
+                  </div>
+                </div>
+              </div>
+              <hr>{% endfor %}</div>
+          </div>
+        </div>
+      </div>
+      <!--Interest Ended above Here-->
+    </div>
+  </div>
+  <!--Right COlumn ends-->
+</div>
+<div class="modal fade" style="display:none;top:15%" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+        </button>
+        <h4 style="color:green" class="modal-title" id="myModalLabel">Upload Photo</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12 col-xs-12 col-lg-12">
+            <div id="showForm">
+              <form enctype="multipart/form-data" id="photo_upload_form">{% csrf_token %}
+                <div id="uploadMessage" style="color:red;text-align:center">{{message}}</div>{{upload_form}}
+                <button id="uploadSubmit" class=".btn-sm btn-primary push-right roundcorner">Upload</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer"></div>
+    </div>
+  </div>
+</div>
+<!----------------------------------------------Profile Page Ends------------------------------------------------------------------------>
+</div>
+<!-- Custom js-->
+<script>
+ $(document).ready(function(){$("#editprofile").click(function(){$("#profilecontent").hide(),$("#profilecontentedit").show(),$("#FeedCheck").removeClass("active"),$("#ProfileCheck").addClass("active"),$("#feed").removeClass("in active"),$("#interest").removeClass("in active"),$("#InterestCheck").removeClass("active"),$("#profile").addClass("in active"),$("InterestCheck").removeClass("active"),$("#profileditcancel").click(function(){$("#profilecontent").show(),$("#profilecontentedit").hide()})})});
+</script>
+<!--Script for opening profile tab-->
+<script>
+$("#forumnav").removeClass("active"),$("#settingnav").removeClass("active"),$("#searchnav").removeClass("active"),$("#forumnav").removeClass("active"),$("#dropdownnav").addClass("active"),$("#initiativenav").removeClass("active"),$("#guesthousenav").removeClass("active"),$("#notificationnav").removeClass("active");
+</script>{% if delete_success%}
+<!--Interest Deleted, Script for showing alert of interest delete-->
+<script>
+ $("#profilecontent").show(),$("#profilecontentedit").hide(),$("#FeedCheck").removeClass("active"),$("#ProfileCheck").removeClass("active"),$("#InterestCheck").addClass("active"),$("#feed").removeClass("in active"),$("#profile").removeClass("in active"),$("#interest").addClass("in active");
+</script>{% endif %} {% if interest_post_success %}
+<!--Interest Posted . Script for opening Interest Tab-->
+<script>
+ $("#profilecontent").show(),$("#profilecontentedit").hide(),$("#FeedCheck").removeClass("active"),$("#ProfileCheck").removeClass("active"),$("#InterestCheck").addClass("active"),$("#feed").removeClass("in active"),$("#profile").removeClass("in active"),$("#interest").addClass("in active");
+</script>{% endif %}
+<!--Scripts for modal upload photo-->
+<script>
+  function upload(o){o.preventDefault();var a=new FormData($("#photo_upload_form").get(0));return $.ajax({url:"/portal/photo/",type:"POST",data:a,cache:!1,processData:!1,contentType:!1,success:function(o){o.status.match("success")?(console.log(o.image_url),$("#photo_placeholder").attr("src",o.image_url),$("#uploadModal").modal("hide")):$("#uploadMessage").html(o.error)},error:function(o,a,t){$("#uploadMessage").html("Error in Connection")}}),!1}$(function(){$("#photo_upload_form").submit(upload)});
+</script>
+<script src="/static/js/readmore.min.js"></script>
+<script>
+ $(document).ready(function(){$('a[data-toggle="tab"]').on("shown.bs.tab",function(t){$.getScript("/static/js/readmore.min.js",function(){$(".storiescontent").readmore()})})});
+</script>
+<script src="/static/js/endless-pagination.js"></script>
+<script>
+  $('.storiescontent').readmore();
+</script>
+<script>
+  $("#story_data").endlessPaginate({onCompleted:function(t){$.getScript("/static/js/readmore.min.js",function(){$(".storiescontent").readmore()})}});
+</script>
+<script>
+  $("#other_entries_page").endlessPaginate({onCompleted:function(e){$.getScript("/static/js/readmore.min.js",function(){$(".storiescontent").readmore()})}});
+</script>
+<!--Script to delay close the success alerts-->
+<script>
+  $(".alert").delay(1e3).slideUp(100,function(){$(this).alert("close")});
+</script>{% endblock %}
